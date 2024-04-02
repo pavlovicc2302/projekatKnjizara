@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { KnjigaModel } from './knjiga.model';
+import { KnjigeService } from './knjige.service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +9,11 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  knjige: KnjigaModel[];
+
+  constructor(private knjigeService: KnjigeService) {
+    this.knjige = this.knjigeService.knjige;
+  }
+
 
 }

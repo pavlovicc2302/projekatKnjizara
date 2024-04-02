@@ -1,6 +1,6 @@
 export interface KnjigaModel {
     id:number,
-    naziv: string,
+    naslov: string,
     autor:string,
     isbn: number,
     slika: string;

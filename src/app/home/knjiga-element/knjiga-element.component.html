@@ -1,0 +1,47 @@
+<!-- <ion-item>
+  <ion-avatar slot="start">
+    <ion-img [src]="knjiga.slika">
+    </ion-img>
+  </ion-avatar>
+  <ion-label> {{knjiga.naslov}} </ion-label>
+  <br>
+  <ion-label> {{knjiga.autor}} </ion-label>
+  <ion-label> {{knjiga.kolicina}} </ion-label>
+
+</ion-item> -->
+
+<!-- <ion-card class="kartica">
+  <img [src]="knjiga.slika" />
+  <ion-card-header>
+    <ion-card-title>{{knjiga.naslov}}</ion-card-title>
+    <ion-card-subtitle>{{knjiga.autor}}</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    Kolicina:{{knjiga.kolicina}}
+  </ion-card-content>
+  <ion-card-content>
+    Cena:{{knjiga.cena}}
+    
+  </ion-card-content>
+</ion-card> -->
+
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <img [src]="knjiga.slika" />
+    </ion-col>
+    <ion-col>
+      <ion-card-title>{{knjiga.naslov}}</ion-card-title>
+    <ion-card-subtitle>{{knjiga.autor}}</ion-card-subtitle>
+    <ion-card-content>
+      Kolicina:{{knjiga.kolicina}}
+    </ion-card-content>
+    <ion-card-content>
+      Cena:{{knjiga.cena}}
+      
+    </ion-card-content>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
