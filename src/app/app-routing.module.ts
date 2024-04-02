@@ -10,7 +10,19 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
+  },  {
+    path: 'dodaj',
+    loadChildren: () => import('./dodaj/dodaj.module').then( m => m.DodajPageModule)
   },
+  {
+    path: 'poruci',
+    loadChildren: () => import('./poruci/poruci.module').then( m => m.PoruciPageModule)
+  },
+  {
+    path: 'profil',
+    loadChildren: () => import('./profil/profil.module').then( m => m.ProfilPageModule)
+  },
+
 ];
 
 @NgModule({

@@ -1,3 +1,27 @@
 <ion-app>
   <ion-router-outlet></ion-router-outlet>
+  <ion-content [fullscreen]="true">
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="home">
+          <ion-icon name="home"></ion-icon>
+          Početna
+        </ion-tab-button>
+        <ion-tab-button tab="dodaj">
+          <ion-icon name="add-circle"></ion-icon>
+          Dodaj
+        </ion-tab-button>
+        <ion-tab-button tab="poruci">
+          <ion-icon name="layers"></ion-icon>
+          Poruci
+          <!-- Smisliti bolji naziv -->
+        </ion-tab-button>
+        <ion-tab-button tab="profil">
+          <ion-icon name="person-circle"></ion-icon>
+          Profil
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-content>
+  
 </ion-app>
