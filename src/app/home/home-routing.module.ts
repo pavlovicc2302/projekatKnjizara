@@ -6,7 +6,12 @@ const routes: Routes = [
   {
     path: '',
     component: HomePage,
+  },
+  {
+    path: ':knjigaId',
+    loadChildren: () => import('./knjiga-detalji/knjiga-detalji.module').then( m => m.KnjigaDetaljiPageModule)
   }
+
 ];
 
 @NgModule({

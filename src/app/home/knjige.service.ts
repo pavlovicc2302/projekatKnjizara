@@ -56,8 +56,12 @@ export class KnjigeService {
 
   //Dovlaci sve knjige koje postoje u bazi
   getKnjige() {
-    return this.http.get('https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige.json')
-      .pipe(map((knjigeData: any) => {
+    return this.http
+      .get(
+        'https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige.json'
+      )
+      .pipe(
+        map((knjigeData: any) => {
           console.log(knjigeData);
 
           const knjige: KnjigaModel[] = [];
@@ -72,16 +76,38 @@ export class KnjigeService {
               cena: knjigeData[key].knjiga.cena,
               kolicina: knjigeData[key].knjiga.kolicina,
               status: knjigeData[key].knjiga.status,
-            })
+            });
           }
           return knjige;
         })
       );
   }
 
-  //Prolazi kroz niz knjiga i pronalazi knjigu sa zadatim id-jem. Za prikaz odabrane knjige
-   getKnjiga(id: string) {
-     return this.knjige.find((k) => k.id === id);
-   }
+  getKnjiga(id: string) {
+    return this.http
+      .get<KnjigaModel>(
+        'https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige/${id}.knjiga.json'
+      )
+      .pipe(
+        map((resData) => {
+          console.log(resData);
+          return {
+            id,
+            autor: resData.autor,
+            naslov: resData.naslov,
+            isbn: resData.isbn,
+            slika: resData.slika,
+            opis: resData.opis,
+            cena: resData.cena,
+            kolicina: resData.kolicina,
+            status: resData.status,
+          };
+        })
+      );
+  }
 
+  //Prolazi kroz niz knjiga i pronalazi knjigu sa zadatim id-jem. Za prikaz odabrane knjige
+  //   getKnjiga(id: string) {
+  //    return this.knjige.find((k) => k.id === id);
+  // }
 }

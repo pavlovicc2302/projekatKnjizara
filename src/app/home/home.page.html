@@ -7,7 +7,7 @@
 <ion-content>
 
   <ion-list>
-    <app-knjiga-element *ngFor="let knjiga of knjige" [knjiga]="knjiga" [routerLink] = "['/','home', 'dodaj', 'poruci', 'profil', knjiga.id]"></app-knjiga-element>
+    <app-knjiga-element *ngFor="let knjiga of knjige" [knjiga]="knjiga" [routerLink] = "['/','home', knjiga.id]"></app-knjiga-element>
     <!-- [routerLink]="quote.id"     "-->
   </ion-list>
 
