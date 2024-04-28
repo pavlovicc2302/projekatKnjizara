@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { KnjigaModel } from '../knjiga.model';
+import { KnjigaModel, Status } from '../knjiga.model';
 
 @Component({
   selector: 'app-knjiga-element',
@@ -11,11 +11,13 @@ export class KnjigaElementComponent  implements OnInit {
   @Input() knjiga: KnjigaModel = {id: 3,
     naslov: 'lupi',
     autor: 'Dzorz Orvel',
-    isbn: 145446641122,
+    isbn: '145446641122',
     slika: 'https://upload.wikimedia.org/wikipedia/sr/0/08/1984_vv.jpg',
     opis: 'Sjajna knjiga kidaaa',
     cena: 1099,
-    kolicina: 10};
+    kolicina: 10,
+    status: Status.Dostupno
+  };
 
   constructor() { }
 

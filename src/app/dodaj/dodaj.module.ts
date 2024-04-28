@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { DodajPageRoutingModule } from './dodaj-routing.module';
 
 import { DodajPage } from './dodaj.page';
+import { KnjigaModalComponent } from '../home/knjiga-modal/knjiga-modal.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { DodajPage } from './dodaj.page';
     IonicModule,
     DodajPageRoutingModule
   ],
-  declarations: [DodajPage]
+  declarations: [DodajPage, KnjigaModalComponent]
 })
 export class DodajPageModule {}
