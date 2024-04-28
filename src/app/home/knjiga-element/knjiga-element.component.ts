@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { KnjigaModel, Status } from '../knjiga.model';
+import { KnjigeService } from '../knjige.service';
 
 @Component({
   selector: 'app-knjiga-element',
@@ -8,7 +9,7 @@ import { KnjigaModel, Status } from '../knjiga.model';
 })
 export class KnjigaElementComponent  implements OnInit {
 
-  @Input() knjiga: KnjigaModel = {id: 3,
+  @Input() knjiga: KnjigaModel = {id: "3",
     naslov: 'lupi',
     autor: 'Dzorz Orvel',
     isbn: '145446641122',
@@ -19,7 +20,6 @@ export class KnjigaElementComponent  implements OnInit {
     status: Status.Dostupno
   };
 
-  constructor() { }
 
   ngOnInit() {}
 
