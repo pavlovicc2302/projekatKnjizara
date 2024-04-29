@@ -85,22 +85,22 @@ export class KnjigeService {
 
   getKnjiga(id: string) {
     return this.http
-      .get<KnjigaModel>(
-        'https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige/${id}.knjiga.json'
+      .get(
+        `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige/${id}.json`
       )
       .pipe(
-        map((resData) => {
+        map((resData: any) => {
           console.log(resData);
           return {
             id,
-            autor: resData.autor,
-            naslov: resData.naslov,
-            isbn: resData.isbn,
-            slika: resData.slika,
-            opis: resData.opis,
-            cena: resData.cena,
-            kolicina: resData.kolicina,
-            status: resData.status,
+            autor: resData.knjiga.autor,
+            naslov: resData.knjiga.naslov,
+            isbn: resData.knjiga.isbn,
+            slika: resData.knjiga.slika,
+            opis: resData.knjiga.opis,
+            cena: resData.knjiga.cena,
+            kolicina: resData.knjiga.kolicina,
+            status: resData.knjiga.status,
           };
         })
       );
