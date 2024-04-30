@@ -7,7 +7,8 @@ export interface KnjigaModel {
     opis: string;
     cena: number,
     kolicina: number,
-    status: Status
+    status: Status,
+    userId: string
 }
 
 export enum Status{

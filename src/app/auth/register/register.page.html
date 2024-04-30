@@ -1,0 +1,32 @@
+<form #registerForm = "ngForm" (ngSubmit) = "onRegister()">
+<ion-grid>
+  <ion-row>
+    <ion-col size-sm="3" offset-sm="3">
+      <ion-item>
+        <ion-input type="text" label="Name" label-placement="floating" ngModel name = "name"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size-sm="3">
+      <ion-item>
+        <ion-input type="text" label="Surame" label-placement="floating" ngModel name = "surname"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size-sm="6" offset-sm="3">
+      <ion-item>
+        <ion-input type="email" label="Email" label-placement="floating" ngModel name = "email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="password" label="Password" label-placement="floating" ngModel name = "password"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size-sm="6" offset-sm="3">
+      <ion-button type="submit" color="primary" shape="round" expand="block" [disabled]="registerForm.invalid">Register</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+</form>

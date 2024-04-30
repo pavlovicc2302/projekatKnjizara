@@ -24,7 +24,12 @@ export class AppComponent {
     const {data, role} = await modal.onWillDismiss();
     if (role === 'confirm'){
       console.log(data);
-      this.knjigeServis.addKnjiga(data.knjigaData).subscribe((res)=>{ console.log(res);});
+      this.knjigeServis.addKnjiga(data.knjigaData.naslov, data.knjigaData.autor, data.knjigaData.isbn,
+         data.knjigaData.slika, data.knjigaData.opis, data.knjigaData.cena, data.knjigaData.kolicina,
+          data.knjigaData.status, data.knjigaData.userId).subscribe((res)=>{ 
+              console.log(res);
+            }
+          );
     }
   }
 }

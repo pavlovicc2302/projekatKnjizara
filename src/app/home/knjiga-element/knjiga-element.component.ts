@@ -17,7 +17,8 @@ export class KnjigaElementComponent  implements OnInit {
     opis: 'Sjajna knjiga kidaaa',
     cena: 1099,
     kolicina: 10,
-    status: Status.Dostupno
+    status: Status.Dostupno,
+    userId: '1'
   };
 
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { KnjigaModel, Status } from './knjiga.model';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class KnjigeService {
       cena: 1099,
       kolicina: 10,
       status: Status.Dostupno,
+      userId: '1'
     },
     {
       id: '2',
@@ -30,6 +32,7 @@ export class KnjigeService {
       cena: 1799,
       kolicina: 18,
       status: Status.Dostupno,
+      userId: '1'
     },
     {
       id: '4',
@@ -41,24 +44,27 @@ export class KnjigeService {
       cena: 1099,
       kolicina: 10,
       status: Status.Dostupno,
+      userId: '1'
     },
   ];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   //Dodavanje jedne knjige u bazu
-  addKnjiga(knjiga: KnjigaModel) {
+  addKnjiga(naslov: string,autor:string,isbn: string,slika: string,opis: string,cena: number,kolicina: number,status: Status,
+    userId: string) {
     return this.http.post(
-      'https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige.json',
-      { knjiga }
+      `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige.json?${this.authService.getToken()}`,
+      { naslov,autor,isbn,slika,opis,cena,kolicina,status,userId}
     );
   }
 
   //Dovlaci sve knjige koje postoje u bazi
   getKnjige() {
+    console.log(this.authService.getUserId())
     return this.http
-      .get(
-        'https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige.json'
+      .get<{[key: string]: KnjigaModel}>(
+        `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige.json?${this.authService.getToken()}`
       )
       .pipe(
         map((knjigeData: any) => {
@@ -68,14 +74,15 @@ export class KnjigeService {
           for (const key in knjigeData) {
             knjige.push({
               id: key,
-              autor: knjigeData[key].knjiga.autor,
-              naslov: knjigeData[key].knjiga.naslov,
-              isbn: knjigeData[key].knjiga.isbn,
-              slika: knjigeData[key].knjiga.slika,
-              opis: knjigeData[key].knjiga.opis,
-              cena: knjigeData[key].knjiga.cena,
-              kolicina: knjigeData[key].knjiga.kolicina,
-              status: knjigeData[key].knjiga.status,
+              autor: knjigeData[key].autor,
+              naslov: knjigeData[key].naslov,
+              isbn: knjigeData[key].isbn,
+              slika: knjigeData[key].slika,
+              opis: knjigeData[key].opis,
+              cena: knjigeData[key].cena,
+              kolicina: knjigeData[key].kolicina,
+              status: knjigeData[key].status,
+              userId: knjigeData[key].userId,
             });
           }
           return knjige;
@@ -86,21 +93,22 @@ export class KnjigeService {
   getKnjiga(id: string) {
     return this.http
       .get(
-        `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige/${id}.json`
+        `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige/${id}.json?${this.authService.getToken()}`
       )
       .pipe(
         map((resData: any) => {
           console.log(resData);
           return {
             id,
-            autor: resData.knjiga.autor,
-            naslov: resData.knjiga.naslov,
-            isbn: resData.knjiga.isbn,
-            slika: resData.knjiga.slika,
-            opis: resData.knjiga.opis,
-            cena: resData.knjiga.cena,
-            kolicina: resData.knjiga.kolicina,
-            status: resData.knjiga.status,
+            autor: resData.autor,
+            naslov: resData.naslov,
+            isbn: resData.isbn,
+            slika: resData.slika,
+            opis: resData.opis,
+            cena: resData.cena,
+            kolicina: resData.kolicina,
+            status: resData.status,
+            userId: resData.userId
           };
         })
       );

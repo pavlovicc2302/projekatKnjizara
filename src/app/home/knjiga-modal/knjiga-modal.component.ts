@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-knjiga-modal',
@@ -10,7 +11,7 @@ import { ModalController } from '@ionic/angular';
 export class KnjigaModalComponent  implements OnInit {
   @ViewChild('f', {static: false}) form: NgForm;
   title = 'Dodavanje knjige'
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private modalCtrl: ModalController, private authService: AuthService) { }
 
   ngOnInit() {}
 
@@ -28,7 +29,8 @@ export class KnjigaModalComponent  implements OnInit {
         opis: this.form.value['opis'],
         cena: this.form.value['cena'],
         kolicina: this.form.value['kolicina'],
-        status: this.form.value['status']
+        status: this.form.value['status'],
+        userId: this.authService.getUserId()
         }
       },
       'confirm'
