@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>knjiga-detalji</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <img [src] = "knjiga.slika" />
+    <ion-card-header>
+      <ion-card-title>{{knjiga.naslov}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>{{knjiga.autor}}</ion-card-content>
+  </ion-card>
+</ion-content>
+

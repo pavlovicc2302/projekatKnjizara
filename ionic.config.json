@@ -1,0 +1,7 @@
+{
+  "name": "knjizara",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

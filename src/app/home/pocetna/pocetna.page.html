@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Knjizara </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-fab-button size = "small" color= "tertiary" (click) = "openModal()">
+        <ion-icon name = "add-circle"></ion-icon>
+      </ion-fab-button>
+    </ion-buttons>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <app-knjiga-element *ngFor="let knjiga of knjige" [knjiga]="knjiga" [routerLink] = "['/', 'home', 'tabs', 'pocetna', knjiga.id]"></app-knjiga-element>
+    
+  </ion-list>
+
+</ion-content>

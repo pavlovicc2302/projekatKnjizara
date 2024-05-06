@@ -1,0 +1,161 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onCancel()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-text-center">
+  <form (ngSubmit)="onAddKnjiga()" #f="ngForm">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-input
+              type="text"
+              label="Autor"
+              label-placement="floating"
+              ngModel
+              name="autor"
+              required
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-input
+              type="text"
+              label="Naslov"
+              label-placement="floating"
+              rows="6"
+              ngModel
+              name="naslov"
+              required
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-input
+              type="text"
+              label="ISBN"
+              label-placement="floating"
+              rows="6"
+              ngModel
+              name="isbn"
+              required
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-input
+              type="text"
+              label="Slika"
+              label-placement="floating"
+              rows="6"
+              ngModel
+              name="slika"
+              required
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-textarea
+              type="text"
+              label="Opis"
+              label-placement="floating"
+              rows="6"
+              ngModel
+              name="opis"
+              required
+            ></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-input
+              type="number"
+              label="Cena"
+              label-placement="floating"
+              rows="6"
+              ngModel
+              name="cena"
+              required
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-input
+              type="number"
+              label="Kolicina"
+              label-placement="floating"
+              rows="6"
+              ngModel
+              name="kolicina"
+              required
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-select
+              type="string"
+              label="Status"
+              label-placement="floating"
+              rows="6"
+              ngModel
+              name="status"
+              required
+            >
+            <ion-select-option value="dostupno">Dostupno</ion-select-option>
+            <ion-select-option value="nema_na_lageru">Nema na lageru</ion-select-option>
+            <ion-select-option value="na_cekanju">Na cekanju</ion-select-option>
+            <ion-select-option value="arhivirano">Arhivirano</ion-select-option>
+          </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-button
+            type="submit"
+            color="primary"
+            expand="block"
+            [disabled]="!f.valid"
+          >
+            Dodaj
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

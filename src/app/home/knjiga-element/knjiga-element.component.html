@@ -1,0 +1,25 @@
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <img [src]="knjiga.slika" />
+    </ion-col>
+    <ion-col>
+      <ion-card-title>{{knjiga.naslov}}</ion-card-title>
+    <ion-card-subtitle>{{knjiga.autor}}</ion-card-subtitle>
+    <ion-card-content>
+      Kolicina:{{knjiga.kolicina}}
+    </ion-card-content>
+    <ion-card-content>
+      Cena:{{knjiga.cena}}
+      
+    </ion-card-content>
+    <ion-card-content>
+      Status:{{knjiga.status}} 
+      <!-- <ng-container *ngIf='knjiga.status === Status.Dostupno'>Dostupno</ng-container>
+      <ng-container *ngIf='knjiga.status === Status.Nema_na_lageru'>Nema na lageru</ng-container>
+      <ng-container *ngIf='knjiga.status === Status.Na_cekanju'>Na čekanju</ng-container>
+      <ng-container *ngIf='knjiga.status === Status.Arhivirano'>Arhivirano</ng-container> -->
+    </ion-card-content>
+    </ion-col>
+  </ion-row>
+</ion-grid>

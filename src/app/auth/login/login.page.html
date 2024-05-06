@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <form #logInForm="ngForm" (ngSubmit)="onLogIn(logInForm)">
+  <ion-grid>
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3">
+        <ion-list>
+          <ion-item>
+            <ion-input type="email" label="Email" label-placement="floating" ngModel name = "email" email required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input type="password" label="Password" label-placement="floating" ngModel name = "password" minlength="7" required></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-sm="6">
+        <ion-button type="submit" color="primary" shape="round" expand="block" size="large" [disabled] = "logInForm.invalid">Login</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-sm="6">
+        <a color="primary" routerLink = "/register">Register</a>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</form>
+</ion-content>
