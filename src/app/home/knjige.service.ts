@@ -50,7 +50,7 @@ export class KnjigeService {
   ) {
     let generatedId;
     return this.http.post<{name: string}>(
-      `https://mrsr-5cfd1-default-rtdb.europe-west1.firebasedatabase.app/knjige.json?auth=${this.authService.getToken()}`,
+      `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige.json?auth=${this.authService.getToken()}`,
       { naslov, autor, isbn, slika, opis, cena, kolicina, status //,userId
       
       }
@@ -76,7 +76,7 @@ export class KnjigeService {
     //console.log(this.authService.getUserId())
     return this.http
       .get<{[key: string]: KnjigaModel}>(
-        `https://mrsr-5cfd1-default-rtdb.europe-west1.firebasedatabase.app/knjige.json?auth=${this.authService.getToken()}`)
+        `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige.json?auth=${this.authService.getToken()}`)
       .pipe(map((knjigeData: any) => {
           console.log(knjigeData);
           const knjige: KnjigaModel[] = [];
@@ -104,7 +104,7 @@ export class KnjigeService {
   getKnjiga(id: string){
     return this.http
       .get(
-        `https://mrsr-5cfd1-default-rtdb.europe-west1.firebasedatabase.app/knjige/${id}.json?auth=${this.authService.getToken()}`
+        `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige/${id}.json?auth=${this.authService.getToken()}`
       )
       .pipe(
         map((resData: any) => {
