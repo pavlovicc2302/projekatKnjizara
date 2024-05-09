@@ -1,0 +1,31 @@
+.book-info {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 600px; /* Prilagodite širinu prema vašim potrebama */
+    margin: 0 auto; /* Centriranje na stranici */
+  }
+
+  .book-info img {
+    max-width: 170px; /* Prilagodite veličinu slike prema vašim potrebama */
+    height: auto;
+    border-radius: 5px;
+    margin-right: 20px; /* Dodajemo marginu između slike i teksta */
+  }
+
+  .knjiga-info {
+    font-size: 0.9em;
+    color: #333;
+  }
+
+  .knjiga-naslov{
+    font-size: 25px;
+    padding-bottom: 10px;
+  }
+  
+  .knjiga-autor{
+    padding-bottom: 20px;
+  }

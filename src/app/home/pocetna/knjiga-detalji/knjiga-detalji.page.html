@@ -3,17 +3,22 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>knjiga-detalji</ion-title>
+    <ion-title>Detalji</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-card>
-    <img [src] = "knjiga.slika" />
+    <img [src] = "knjiga.slika" width="60%" height="60%"/>
     <ion-card-header>
       <ion-card-title>{{knjiga.naslov}}</ion-card-title>
     </ion-card-header>
-    <ion-card-content>{{knjiga.autor}}</ion-card-content>
+    <ion-card-content>Autor: {{knjiga.autor}}</ion-card-content>
+    <ion-card-content>Cena: {{knjiga.cena}} RSD</ion-card-content>
+    <ion-card-content>ISBN: {{knjiga.isbn}}</ion-card-content>
+    <ion-card-content>Količina: {{knjiga.kolicina}}</ion-card-content>
+    <ion-card-content>Status: {{knjiga.status}}</ion-card-content>
+    <ion-card-content>Opis: {{knjiga.opis}}</ion-card-content>
   </ion-card>
 </ion-content>
 
