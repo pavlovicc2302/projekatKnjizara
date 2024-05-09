@@ -16,7 +16,7 @@
       </ion-item>
       <ion-item>
         <ion-icon name="lock-closed-outline"></ion-icon>
-        <ion-input [type]="show ? 'text' : 'password'" placeholder="Password"  ngModel name = "password" minlength="7" required></ion-input>
+        <ion-input [type]="show ? 'text' : 'password'" placeholder="Lozinka"  ngModel name = "password" minlength="7" required></ion-input>
 
       </ion-item>
     </ion-list>
@@ -24,12 +24,6 @@
     <ion-row>
       <ion-col >
         <ion-button id="present-alert" type="submit" shape="round" expand="block" [disabled] = "logInForm.invalid">Prijavi se</ion-button>
-        <ion-alert
-        trigger="present-alert"
-        header="Netačni kredencijali."
-        message="Proverite šifru ili email adresu."
-        [buttons]="alertButtons"
-      ></ion-alert>
       </ion-col>
     </ion-row>
     <br><br><br><br>

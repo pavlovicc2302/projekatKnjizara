@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="register-form"  >
+  <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm)" class="register-form"  >
 <div class="loginRegister-image">
   <img src="./assets/slike/loginRegister.png"/>
 
@@ -13,30 +13,24 @@
     <ion-list>
       <ion-item>
         <ion-icon name="person-outline"></ion-icon>
-        <ion-input type="text" placeholder="Ime" formControlName="name"></ion-input>
+        <ion-input type="text" placeholder="Ime" ngModel name = "name" text required></ion-input>
       </ion-item>
       <ion-item>
         <ion-icon name="person-outline"></ion-icon>
-        <ion-input type="text" placeholder="Prezime" formControlName="surname"></ion-input>
+        <ion-input type="text" placeholder="Prezime" ngModel name = "surname" text required></ion-input>
       </ion-item>
       <ion-item>
         <ion-icon name="mail-outline"></ion-icon>
-        <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+        <ion-input type="email" placeholder="Email" ngModel name = "email" email required></ion-input>
       </ion-item>
       <ion-item>
         <ion-icon name="lock-closed-outline"></ion-icon>
-        <ion-input [type]="show ? 'text' : 'password'" placeholder="Lozinka"  formControlName="password" clearOnEdit="false"> </ion-input>
+        <ion-input [type]="show ? 'text' : 'password'" placeholder="Lozinka" ngModel name = "password" minlength="7" required clearOnEdit="false"> </ion-input>
       </ion-item>
     </ion-list>  
     <ion-row>
       <ion-col size-sm="6" offset-sm="3">
         <ion-button id="present-alert" type="submit" color="primary" shape="round" expand="block" [disabled] = "registerForm.invalid">Registruj se</ion-button>
-        <ion-alert
-        trigger="present-alert"
-        header="Nalog vec postoji!"
-        message="Pređite na stranicu za prijavu."
-        [buttons]="alertButtons"
-      ></ion-alert>
       </ion-col>
     </ion-row>
     <br><br><br><br>
