@@ -12,6 +12,8 @@ export class LoginPage implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) { }
 
+  show:boolean = false;
+
   ngOnInit() {
   }
 
@@ -28,4 +30,10 @@ export class LoginPage implements OnInit {
       this.router.navigateByUrl('/home/tabs/pocetna');
     }
   }
+  togglePassword() {
+    this.show = !this.show;
+  }
+
+
+  
 }

@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class RegisterPage implements OnInit {
 
   registerForm: FormGroup;
+  show:boolean = false;
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -21,6 +22,8 @@ export class RegisterPage implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(7)])
     })
+
+    this.disableAutoFill();
   }
 
   onRegister() {
@@ -34,4 +37,17 @@ export class RegisterPage implements OnInit {
     )
   }
 
+  togglePassword() {
+    this.show = !this.show;
+  }
+
+  
+  disableAutoFill() {
+    const inputFields = document.querySelectorAll<HTMLInputElement>('ion-input');
+  
+    inputFields.forEach((input: HTMLInputElement) => {
+      input.setAttribute('autocomplete', 'new-password');
+    });
+  }
+  
 }
