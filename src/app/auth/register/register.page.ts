@@ -12,6 +12,7 @@ export class RegisterPage implements OnInit {
 
   registerForm: FormGroup;
   show:boolean = false;
+  alertButtons = ['Ok'];
 
   constructor(private authService: AuthService, private router: Router) { }
 

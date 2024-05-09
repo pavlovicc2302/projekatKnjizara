@@ -11,6 +11,7 @@ import { NgForm } from '@angular/forms';
 export class LoginPage implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) { }
+  alertButtons = ['Ok'];
 
   show:boolean = false;
 
