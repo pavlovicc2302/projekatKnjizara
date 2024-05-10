@@ -73,28 +73,27 @@ export class KnjigeService {
 
    //Dovlaci sve knjige koje postoje u bazi
    getKnjige() {
-    //console.log(this.authService.getUserId())
     return this.http
       .get<{[key: string]: KnjigaModel}>(
         `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige.json?auth=${this.authService.getToken()}`)
       .pipe(map((knjigeData: any) => {
-          console.log(knjigeData);
           const knjige: KnjigaModel[] = [];
           for (const key in knjigeData) {
-            knjige.push({
-              id: key,
-              autor: knjigeData[key].autor,
-              naslov: knjigeData[key].naslov,
-              isbn: knjigeData[key].isbn,
-              slika: knjigeData[key].slika,
-              opis: knjigeData[key].opis,
-              cena: knjigeData[key].cena,
-              kolicina: knjigeData[key].kolicina,
-              status: knjigeData[key].status,
-              //userId: knjigeData[key].userId,
-            });
+            const knjigaData = knjigeData[key];
+            if (knjigaData.status.toLowerCase() === Status[Status.Dostupno].toLowerCase()) {
+              knjige.push({
+                id: key,
+                autor: knjigaData.autor,
+                naslov: knjigaData.naslov,
+                isbn: knjigaData.isbn,
+                slika: knjigaData.slika,
+                opis: knjigaData.opis,
+                cena: knjigaData.cena,
+                kolicina: knjigaData.kolicina,
+                status: knjigaData.status,
+              });
+            }
           }
-          console.log(knjige)
           this._knjige.next(knjige);
           return knjige;
         })
@@ -128,4 +127,22 @@ export class KnjigeService {
   // getKnjiga(id: string) {
   //   return this.knjige.find((k) => k.id === id);
   // }
+
+  promeniStatusKnjige(id: string, status: Status) {
+    const knjiga = this._knjige.value.find(k => k.id === id);
+    if (!knjiga) {
+      console.error('Knjiga nije pronađena.');
+      return null;
+    }
+    knjiga.status = status; // Promeni status na "Arhivirano"
+    return this.http.patch(
+      `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige/${id}.json?auth=${this.authService.getToken()}`,
+      { status: Status[Status.Arhivirano] } // Ažuriraj status u Firebase bazi
+    ).pipe(
+      tap(() => {
+        // Emituj ažuriranu listu knjiga
+        this._knjige.next([...this._knjige.value]);
+      })
+    );
+  }
 }
