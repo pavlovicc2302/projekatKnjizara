@@ -11,6 +11,7 @@ export interface AuthResponseData {
   localId: string;
   expiresIn: string;
   registered?: boolean;
+  displayName: string;
 }
 
 export interface UserData {
@@ -49,6 +50,7 @@ export class AuthService {
         const user = new User(
           userData.localId,
           userData.email,
+          userData.displayName,
           userData.idToken,
           expirationTime
         );
@@ -63,7 +65,7 @@ export class AuthService {
       `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${
         environment.firebaseApiKey
       }`,
-      { email: user.email, password: user.password, returnSecureToken: true }
+      { email: user.email, password: user.password,displayName:`${user.name} ${user.surname}`, returnSecureToken: true }
     );
   }
   logOut() {

@@ -10,48 +10,25 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private alertController: AlertController
-  ) {}
+
+  constructor(private authService: AuthService, private router: Router, private alertController: AlertController) { }
   alertButtons = ['Ok'];
 
-  show: boolean = false;
+  show:boolean = false;
 
-  ngOnInit() {}
 
-  onLogIn(logInForm: NgForm) {
-    console.log(logInForm);
+  ngOnInit() {
+  }
+
+  onLogIn(logInForm: NgForm){
+    console.log(logInForm)
     if (logInForm.valid) {
       this.authService.logIn(logInForm.value).subscribe({
         next: (resData) => {
           console.log('Prijava uspesna!');
           console.log(resData);
-          var imeUlogovanog = '';
-          var prezimeUlogovanog = '';
-          var stigloDoTacke = false;
-          for (var e of resData.email) {
-            if (e !== '@') {
-              if (e === '.') {
-                stigloDoTacke = true;
-              }
-              if (!stigloDoTacke) {
-                imeUlogovanog += e;
-              } else {
-                if (e !== '.') {
-                  prezimeUlogovanog += e;
-                }
-              }
-            } else {
-              break;
-            }
-          }
-          localStorage.setItem('imeUlogovanog', imeUlogovanog);
-          localStorage.setItem('prezimeUlogovanog', prezimeUlogovanog);
-          localStorage.setItem('ulogovaniID', resData.localId);
 
-          console.log(imeUlogovanog);
+          localStorage.setItem("ulogovani",resData.displayName);
           this.router.navigateByUrl('/home/tabs/pocetna');
         },
         error: (error) => {
@@ -59,13 +36,13 @@ export class LoginPage implements OnInit {
           console.log(error);
           let errorMessage = '';
           if (error.error.error.message === 'INVALID_LOGIN_CREDENTIALS') {
-            errorMessage =
-              'Netačni kredencijali. Proverite email adresu i lozinku!';
+            errorMessage = 'Netačni kredencijali. Proverite email adresu i lozinku!';
           }
           this.presentAlert('Greška!', errorMessage);
-        },
+        }
       });
     }
+    
   }
   togglePassword() {
     this.show = !this.show;
@@ -75,8 +52,9 @@ export class LoginPage implements OnInit {
     const alert = await this.alertController.create({
       header: header,
       message: message,
-      buttons: ['OK'],
+      buttons: ['OK']
     });
     await alert.present();
   }
+  
 }

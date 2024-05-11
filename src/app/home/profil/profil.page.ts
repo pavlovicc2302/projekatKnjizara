@@ -11,8 +11,7 @@ export class ProfilPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-     this.ulogovani = localStorage.getItem("imeUlogovanog") + ' ' + localStorage.getItem("prezimeUlogovanog")
-     console.log(this.ulogovani);
+    this.ulogovani = localStorage.getItem("ulogovani")
   }
 
 }
