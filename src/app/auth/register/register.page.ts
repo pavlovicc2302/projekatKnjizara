@@ -13,8 +13,13 @@ export class RegisterPage implements OnInit {
   registerForm: FormGroup;
   show: boolean = false;
   alertButtons = ['Ok'];
+  
 
-  constructor(private authService: AuthService, private router: Router, private alertController: AlertController) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private alertController: AlertController
+  ) {}
 
   ngOnInit() {
     // this.registerForm = new FormGroup({
@@ -29,24 +34,43 @@ export class RegisterPage implements OnInit {
 
   onRegister(registerForm: NgForm) {
     console.log(registerForm);
-    if (registerForm.valid) {
-      this.authService.register(registerForm.value).subscribe(
-        {
+    let errorMessage = '';
+    var deoDoMankija = '';
+    var unetiEmail = registerForm.value['email'];
+    console.log(unetiEmail)
+    for (var e of unetiEmail) {
+      if (e !== '@') {
+        deoDoMankija += e;
+      } else {
+        break;
+      }
+    }
+    console.log(deoDoMankija)
+    if (!deoDoMankija.includes('.')) {
+      errorMessage = "Email mora biti u formatu ime.prezime@gmail.com"
+      this.presentAlert('Greška', errorMessage)
+      return;
+    } else {
+      if (registerForm.valid) {
+        this.authService.register(registerForm.value).subscribe({
           next: (resData) => {
             console.log('Registracija uspešna');
             console.log(resData);
+
             this.router.navigateByUrl('/login');
           },
           error: (error) => {
             console.log('Neuspešna registracija!');
             console.log(error);
-            let errorMessage = '';
+           
             if (error.error.error.message === 'EMAIL_EXISTS') {
-              errorMessage = 'Ovaj mejl je već registrovan! Pređite na stranicu za prijavu.';
+              errorMessage =
+                'Ovaj mejl je već registrovan! Pređite na stranicu za prijavu.';
             }
             this.presentAlert('Greška!', errorMessage);
-          }
+          },
         });
+      }
     }
   }
 
@@ -67,7 +91,7 @@ export class RegisterPage implements OnInit {
     const alert = await this.alertController.create({
       header: header,
       message: message,
-      buttons: ['OK']
+      buttons: ['OK'],
     });
     await alert.present();
   }

@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profil.page.scss'],
 })
 export class ProfilPage implements OnInit {
+  ulogovani: any;
 
   constructor() { }
 
   ngOnInit() {
+     this.ulogovani = localStorage.getItem("imeUlogovanog") + ' ' + localStorage.getItem("prezimeUlogovanog")
+     console.log(this.ulogovani);
   }
 
 }
