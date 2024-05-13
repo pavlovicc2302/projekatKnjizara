@@ -2,8 +2,14 @@
   width: fit-content;
   height: fit-content;
   text-align: center;
+  padding-top: 15px;
   img{
     width: 30%;
     height: 30%;
+  }
+
+  .logout{
+    --background: var(--ion-color-danger);
+    font-weight: bold;
   }
 }

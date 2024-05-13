@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-card>
-    <img [src] = "knjiga.slika" width="60%" height="60%"/>
+    <img [src]="knjiga.slika" width="60%" height="60%" />
     <ion-card-header>
       <ion-card-title>{{knjiga.naslov}}</ion-card-title>
     </ion-card-header>
@@ -20,7 +20,8 @@
     <ion-card-content>Status: {{knjiga.status}}</ion-card-content>
     <ion-card-content>Opis: {{knjiga.opis}}</ion-card-content>
   </ion-card>
-  <ion-button> Izmeni</ion-button>
-  <ion-button (click)="promeniStatusKnjige(Status.Arhivirano)"> Arhiviraj</ion-button>
+  <ion-button class = "dugme" > Izmeni</ion-button>
+  <ion-button class = "dugme "(click)="promeniStatusKnjige(Status.Arhivirano)">
+    Arhiviraj</ion-button
+  >
 </ion-content>
-
