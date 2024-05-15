@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { KnjigaModel, Status } from '../knjiga.model';
 import { KnjigeService } from '../knjige.service';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { KnjigaModalComponent } from '../knjiga-modal/knjiga-modal.component';
 
 @Component({
@@ -13,7 +13,9 @@ export class PocetnaPage implements OnInit {
 
   knjige:  KnjigaModel[];
 
-  constructor(private knjigeService: KnjigeService, private modalCtrl: ModalController) { 
+  isLoading: boolean = false;
+
+  constructor(private knjigeService: KnjigeService, private modalCtrl: ModalController, private loadingCtrl: LoadingController) { 
     //this.knjige = this.knjigeService.knjige;
   }
 
@@ -24,10 +26,11 @@ export class PocetnaPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    this.isLoading = true;
     this.knjigeService.getKnjige().subscribe(
       (knjigeData: any)=>{
-        
-        this.knjige = knjigeData;
+          this.knjige = knjigeData;
+          this.isLoading = false;
       }
     )
   }

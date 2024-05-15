@@ -13,6 +13,7 @@ export class RegisterPage implements OnInit {
   registerForm: FormGroup;
   show: boolean = false;
   alertButtons = ['Ok'];
+  isLoading: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -36,11 +37,12 @@ export class RegisterPage implements OnInit {
     let errorMessage = '';
 
     if (registerForm.valid) {
+      this.isLoading = true;
       this.authService.register(registerForm.value).subscribe({
         next: (resData) => {
           console.log('Registracija uspešna');
           console.log(resData);
-
+          this.isLoading = false;
           this.router.navigateByUrl('/login');
         },
         error: (error) => {
@@ -51,6 +53,7 @@ export class RegisterPage implements OnInit {
             errorMessage =
               'Ovaj mejl je već registrovan! Pređite na stranicu za prijavu.';
           }
+          this.isLoading = false;
           this.presentAlert('Greška!', errorMessage);
         },
       });

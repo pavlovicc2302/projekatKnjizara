@@ -16,6 +16,7 @@ export class LoginPage implements OnInit {
 
   show:boolean = false;
 
+  isLoading: boolean = false;
 
   ngOnInit() {
   }
@@ -23,12 +24,14 @@ export class LoginPage implements OnInit {
   onLogIn(logInForm: NgForm){
     console.log(logInForm)
     if (logInForm.valid) {
+      this.isLoading = true;
       this.authService.logIn(logInForm.value).subscribe({
         next: (resData) => {
           console.log('Prijava uspesna!');
           console.log(resData);
 
           localStorage.setItem("ulogovani",resData.displayName);
+          this.isLoading = false;
           this.router.navigateByUrl('/home/tabs/pocetna');
         },
         error: (error) => {
@@ -38,6 +41,7 @@ export class LoginPage implements OnInit {
           if (error.error.error.message === 'INVALID_LOGIN_CREDENTIALS') {
             errorMessage = 'Netačni kredencijali. Proverite email adresu i lozinku!';
           }
+          this.isLoading = false;
           this.presentAlert('Greška!', errorMessage);
         }
       });

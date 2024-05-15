@@ -5,12 +5,15 @@
 </ion-header>
 
 <ion-content>
+  <div class="ion-text-center" *ngIf="isLoading">
+    <ion-spinner color="primary"></ion-spinner>
+  </div>
   <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm)" class="register-form"  >
 <div class="loginRegister-image">
   <img src="./assets/slike/loginRegister.png"/>
 
 </div>
-    <ion-list>
+    <ion-list *ngIf="!isLoading">
       <ion-item>
         <ion-icon name="person-outline"></ion-icon>
         <ion-input type="text" placeholder="Ime" ngModel name = "name" text required></ion-input>
