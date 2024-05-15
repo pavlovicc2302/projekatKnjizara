@@ -31,6 +31,7 @@ export class LoginPage implements OnInit {
           console.log(resData);
 
           localStorage.setItem("ulogovani",resData.displayName);
+          localStorage.setItem("ulogovaniID",resData.localId);
           this.isLoading = false;
           this.router.navigateByUrl('/home/tabs/pocetna');
         },

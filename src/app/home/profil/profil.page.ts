@@ -20,6 +20,7 @@ export class ProfilPage implements OnInit {
   logOut() {
     this.authService.logOut();
     localStorage.removeItem('ulogovani');
+    localStorage.removeItem('ulogovaniID');
     this.router.navigateByUrl('/login');
   }
 
