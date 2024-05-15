@@ -9,7 +9,6 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content class="ion-text-center">
   <form (ngSubmit)="onAddKnjiga()" #f="ngForm">
     <ion-grid>
@@ -20,7 +19,7 @@
               type="text"
               label="Autor"
               label-placement="floating"
-              ngModel
+              [(ngModel)]="autor"
               name="autor"
               required
             ></ion-input>
@@ -34,8 +33,7 @@
               type="text"
               label="Naslov"
               label-placement="floating"
-              rows="6"
-              ngModel
+              [(ngModel)]="naslov"
               name="naslov"
               required
             ></ion-input>
@@ -50,8 +48,7 @@
               type="text"
               label="ISBN"
               label-placement="floating"
-              rows="6"
-              ngModel
+              [(ngModel)]="isbn"
               name="isbn"
               required
             ></ion-input>
@@ -66,8 +63,7 @@
               type="text"
               label="Slika"
               label-placement="floating"
-              rows="6"
-              ngModel
+              [(ngModel)]="slika"
               name="slika"
               required
             ></ion-input>
@@ -82,8 +78,7 @@
               type="text"
               label="Opis"
               label-placement="floating"
-              rows="6"
-              ngModel
+              [(ngModel)]="opis"
               name="opis"
               required
             ></ion-textarea>
@@ -98,8 +93,7 @@
               type="number"
               label="Cena"
               label-placement="floating"
-              rows="6"
-              ngModel
+              [(ngModel)]="cena"
               name="cena"
               required
             ></ion-input>
@@ -114,8 +108,7 @@
               type="number"
               label="Kolicina"
               label-placement="floating"
-              rows="6"
-              ngModel
+              [(ngModel)]="kolicina"
               name="kolicina"
               required
             ></ion-input>
@@ -130,8 +123,7 @@
               type="string"
               label="Status"
               label-placement="floating"
-              rows="6"
-              ngModel
+              [(ngModel)]="status"
               name="status"
               required
             >
@@ -152,7 +144,7 @@
             expand="block"
             [disabled]="!f.valid"
           >
-            Dodaj
+            {{titleButton}}
           </ion-button>
         </ion-col>
       </ion-row>

@@ -20,10 +20,6 @@ const routes: Routes = [
         loadChildren: () => import('./profil/profil.module').then( m => m.ProfilPageModule)
       },
       {
-        path: 'dodaj',
-        loadChildren: () => import('./dodaj/dodaj.module').then( m => m.DodajPageModule)
-      },
-      {
         path: '',
         redirectTo: '/home/tabs/pocetna',
         pathMatch: 'full'

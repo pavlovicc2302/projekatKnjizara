@@ -20,8 +20,6 @@
     <ion-card-content>Status: {{knjiga.status}}</ion-card-content>
     <ion-card-content>Opis: {{knjiga.opis}}</ion-card-content>
   </ion-card>
-  <ion-button class = "dugme" > Izmeni</ion-button>
-  <ion-button class = "dugme "(click)="promeniStatusKnjige(Status.Arhivirano)">
-    Arhiviraj</ion-button
-  >
+  <ion-button class="dugme" (click)="onEditKnjiga()"> Izmeni </ion-button>
+  <ion-button class="dugme" (click)="promeniStatusKnjige(Status.Arhivirano)"> Arhiviraj </ion-button>
 </ion-content>
