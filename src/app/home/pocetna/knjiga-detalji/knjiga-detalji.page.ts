@@ -3,7 +3,7 @@ import { KnjigaModel, Status } from '../../knjiga.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KnjigeService } from '../../knjige.service';
 import { switchMap, tap } from 'rxjs';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { KnjigaModalComponent } from '../../knjiga-modal/knjiga-modal.component';
 
 @Component({
@@ -13,6 +13,7 @@ import { KnjigaModalComponent } from '../../knjiga-modal/knjiga-modal.component'
 })
 export class KnjigaDetaljiPage implements OnInit {
   Status = Status;
+  komentar: string = '';
 
   knjiga: KnjigaModel = {
     id: '3',
@@ -32,7 +33,8 @@ export class KnjigaDetaljiPage implements OnInit {
     private knjigaService: KnjigeService,
     private router: Router,
     private alertController: AlertController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private toastController: ToastController
   ) {}
 
   ngOnInit() {
@@ -106,4 +108,41 @@ export class KnjigaDetaljiPage implements OnInit {
     });
     return await modal.present();
   }
+
+  async addKomentar() {
+    const userId = localStorage.getItem('ulogovaniID');
+    if (!userId) {
+      this.presentToast('Korisnik nije prijavljen!', 'bottom');
+      return;
+    }
+
+    const komentarData = {
+      userId: userId,
+      knjigaId: this.knjiga.id,
+      komentar: this.komentar,
+    };
+
+    this.knjigaService.addKomentar(komentarData).subscribe(
+      () => {
+        console.log('Komentar je uspešno sačuvan.');
+        this.presentToast('Komentar je objavljen!', 'bottom');
+        this.komentar = '';
+      },
+      (error) => {
+        console.error('Došlo je do greške prilikom čuvanja komentara:', error);
+        this.presentToast('Greška pri objavljivanju komentara!', 'bottom');
+      }
+    );
+  }
+
+  async presentToast(message: string, position: 'top' | 'middle' | 'bottom') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 1500,
+      position: position,
+    });
+
+    await toast.present();
+  }
+
 }

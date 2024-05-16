@@ -127,4 +127,11 @@ export class KnjigeService {
       })
     );
   }
+
+  addKomentar(komentarData: { userId: string, knjigaId: string, komentar: string }) {
+    return this.http.post(
+      `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/komentari.json?auth=${this.authService.getToken()}`,
+      komentarData
+    );
+  }
 }

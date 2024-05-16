@@ -22,4 +22,12 @@
   </ion-card>
   <ion-button class="dugme" (click)="onEditKnjiga()"> Izmeni </ion-button>
   <ion-button class="dugme" (click)="promeniStatusKnjige(Status.Arhivirano)"> Arhiviraj </ion-button>
+
+  <ion-card>
+    <ion-item>
+      <ion-label position="floating">Unesite komentar</ion-label>
+      <ion-textarea [(ngModel)]="komentar"></ion-textarea>
+    </ion-item>
+    <ion-button expand="block" (click)="addKomentar()">Objavi</ion-button>
+  </ion-card>
 </ion-content>
