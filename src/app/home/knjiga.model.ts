@@ -8,6 +8,7 @@ export interface KnjigaModel {
     cena: number,
     kolicina: number,
     status: Status,
+    komentari?: Komentar[],
     //userId: string
 }
 
@@ -17,3 +18,10 @@ export enum Status{
     Na_cekanju,
     Arhivirano
 }
+
+export interface Komentar {
+    id: string;
+    userId: string;
+    knjigaId: string;
+    komentar: string;
+  }

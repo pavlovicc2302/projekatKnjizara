@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { KnjigaModel, Status } from './knjiga.model';
+import { KnjigaModel, Komentar, Status } from './knjiga.model';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map, switchMap, take, tap } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
@@ -132,6 +132,22 @@ export class KnjigeService {
     return this.http.post(
       `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/komentari.json?auth=${this.authService.getToken()}`,
       komentarData
+    );
+  }
+
+  getKomentare(knjigaId: string) {
+    return this.http.get<{[key: string]: Komentar}>(
+      `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/komentari.json?auth=${this.authService.getToken()}&orderBy="knjigaId"&equalTo="${knjigaId}"`
+    ).pipe(
+      map((komentarData) => {
+        const komentari: Komentar[] = [];
+        for (const key in komentarData) {
+          if (komentarData.hasOwnProperty(key)) {
+            komentari.push({ id: key, ...komentarData[key] });
+          }
+        }
+        return komentari;
+      })
     );
   }
 }

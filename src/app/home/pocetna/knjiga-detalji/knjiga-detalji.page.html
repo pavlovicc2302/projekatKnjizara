@@ -25,9 +25,16 @@
 
   <ion-card>
     <ion-item>
-      <ion-label position="floating">Unesite komentar</ion-label>
+      <ion-label position="floating">Unesite komentar:</ion-label>
       <ion-textarea [(ngModel)]="komentar"></ion-textarea>
     </ion-item>
-    <ion-button expand="block" (click)="addKomentar()">Objavi</ion-button>
+    <ion-button calss="dugme" expand="block" (click)="addKomentar()">Objavi</ion-button>
+  </ion-card>
+
+  <ion-card *ngFor="let komentar of komentari">
+    <ion-card-content>
+      <p>{{ komentar.komentar }}</p>
+    </ion-card-content>
+    <ion-button class="dugme">Štampaj</ion-button>  
   </ion-card>
 </ion-content>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { KnjigaModel, Status } from '../../knjiga.model';
+import { KnjigaModel, Komentar, Status } from '../../knjiga.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KnjigeService } from '../../knjige.service';
 import { switchMap, tap } from 'rxjs';
@@ -14,6 +14,7 @@ import { KnjigaModalComponent } from '../../knjiga-modal/knjiga-modal.component'
 export class KnjigaDetaljiPage implements OnInit {
   Status = Status;
   komentar: string = '';
+  komentari: Komentar[] = [];
 
   knjiga: KnjigaModel = {
     id: '3',
@@ -25,6 +26,7 @@ export class KnjigaDetaljiPage implements OnInit {
     cena: 1099,
     kolicina: 10,
     status: Status.Dostupno,
+    komentari: [],
     // userId: '1'
   };
 
@@ -47,6 +49,7 @@ export class KnjigaDetaljiPage implements OnInit {
       )
       .subscribe((knjiga) => {
         this.knjiga = knjiga;
+        this.loadKomentari();
       });
 
     this.knjigaService.knjige.subscribe((knjige) => {
@@ -117,16 +120,18 @@ export class KnjigaDetaljiPage implements OnInit {
     }
 
     const komentarData = {
+      id: null,
       userId: userId,
       knjigaId: this.knjiga.id,
       komentar: this.komentar,
     };
 
     this.knjigaService.addKomentar(komentarData).subscribe(
-      () => {
+      (noviKomentar: any) => {
         console.log('Komentar je uspešno sačuvan.');
         this.presentToast('Komentar je objavljen!', 'bottom');
         this.komentar = '';
+        this.komentari.push(noviKomentar);
       },
       (error) => {
         console.error('Došlo je do greške prilikom čuvanja komentara:', error);
@@ -143,6 +148,12 @@ export class KnjigaDetaljiPage implements OnInit {
     });
 
     await toast.present();
+  }
+
+  loadKomentari() {
+    this.knjigaService.getKomentare(this.knjiga.id).subscribe((komentari) => {
+      this.komentari = komentari;
+    });
   }
 
 }
