@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, ModalController } from '@ionic/angular';
 import { KnjigaModel, Status } from '../knjiga.model';
 import { KnjigeService } from '../knjige.service';
 
@@ -27,6 +27,13 @@ export class PoruciPage implements OnInit {
           this.knjige = knjigeData;
       }
     )
+  }
+
+  onIonInfinite(ev) {
+    
+    setTimeout(() => {
+      (ev as InfiniteScrollCustomEvent).target.complete();
+    }, 500);
   }
 
 }

@@ -1,12 +1,15 @@
 <div class="book-info">
   <img [src]="knjiga.slika" alt="Slika knjige" />
   <div>
-    <ion-card-title class="knjiga-naslov">{{knjiga.naslov}}</ion-card-title>
-    <ion-card-subtitle class="knjiga-autor">{{knjiga.autor}}</ion-card-subtitle>
+    <ion-card-title class="knjiga-naslov">{{ knjiga.naslov }}</ion-card-title>
+    <ion-card-subtitle class="knjiga-autor">{{
+      knjiga.autor
+    }}</ion-card-subtitle>
     <div class="knjiga-info">
-      Količina: {{knjiga.kolicina}}<br>
-      Cena: {{knjiga.cena}} RSD<br>
-      Status: {{knjiga.status}}
+      Cena: {{ knjiga.cena }} RSD<br /><br>
+      Količina za poručivanje:
+      <ion-input class="kolicina-porucivanje" type="text" name="poruciti" required></ion-input>
+      <ion-button> Dodaj</ion-button>
     </div>
   </div>
 </div>

@@ -4,12 +4,24 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <app-knjiga-element-poruci
-      *ngFor="let knjiga of knjige"
-      [knjiga]="knjiga"
-      [routerLink]="['/', 'home', 'tabs', 'poruci', knjiga.id]"
-    ></app-knjiga-element-poruci>
-  </ion-list>
+
+  <ion-content fixed-slot-placement="before">
+   
+
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+      <ion-fab-button>
+        <ion-icon name="cart-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-list>
+      <app-knjiga-element-poruci
+        *ngFor="let knjiga of knjige"
+        [knjiga]="knjiga"
+        [routerLink]="['/', 'home', 'tabs', 'poruci', knjiga.id]"
+      ></app-knjiga-element-poruci>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  
 </ion-content>
