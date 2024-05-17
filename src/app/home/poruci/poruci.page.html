@@ -1,13 +1,15 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>poruci</ion-title>
+    <ion-title style="font-size: 30px"> Za poruciti </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">poruci</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-list>
+    <app-knjiga-element-poruci
+      *ngFor="let knjiga of knjige"
+      [knjiga]="knjiga"
+      [routerLink]="['/', 'home', 'tabs', 'poruci', knjiga.id]"
+    ></app-knjiga-element-poruci>
+  </ion-list>
 </ion-content>

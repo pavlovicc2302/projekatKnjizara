@@ -27,7 +27,7 @@ export class PocetnaPage implements OnInit {
 
   ionViewWillEnter(){
     this.isLoading = true;
-    this.knjigeService.getKnjige().subscribe(
+    this.knjigeService.getKnjige(Status.Dostupno).subscribe(
       (knjigeData: any)=>{
           this.knjige = knjigeData;
           this.isLoading = false;

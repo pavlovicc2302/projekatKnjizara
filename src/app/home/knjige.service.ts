@@ -19,7 +19,7 @@ export class KnjigeService {
 
   addKnjiga(naslov: string, autor: string, isbn: string, slika: string, opis: string, cena: number, kolicina: number, status: Status) {
     let generatedId;
-    return this.http.post<{name: string}>(
+    return this.http.post<{ name: string }>(
       `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige.json?auth=${this.authService.getToken()}`,
       { naslov, autor, isbn, slika, opis, cena, kolicina, status }
     ).pipe(
@@ -39,32 +39,32 @@ export class KnjigeService {
     );
   }
 
-  getKnjige() {
+  getKnjige(status:Status) {
     return this.http
-      .get<{[key: string]: KnjigaModel}>(
+      .get<{ [key: string]: KnjigaModel }>(
         `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige.json?auth=${this.authService.getToken()}`
       )
       .pipe(map((knjigeData: any) => {
-          const knjige: KnjigaModel[] = [];
-          for (const key in knjigeData) {
-            const knjigaData = knjigeData[key];
-            if (knjigaData.status.toLowerCase() === Status[Status.Dostupno].toLowerCase()) {
-              knjige.push({
-                id: key,
-                autor: knjigaData.autor,
-                naslov: knjigaData.naslov,
-                isbn: knjigaData.isbn,
-                slika: knjigaData.slika,
-                opis: knjigaData.opis,
-                cena: knjigaData.cena,
-                kolicina: knjigaData.kolicina,
-                status: knjigaData.status,
-              });
-            }
+        const knjige: KnjigaModel[] = [];
+        for (const key in knjigeData) {
+          const knjigaData = knjigeData[key];
+          if (knjigaData.status.toLowerCase() === Status[status].toLowerCase()) {
+            knjige.push({
+              id: key,
+              autor: knjigaData.autor,
+              naslov: knjigaData.naslov,
+              isbn: knjigaData.isbn,
+              slika: knjigaData.slika,
+              opis: knjigaData.opis,
+              cena: knjigaData.cena,
+              kolicina: knjigaData.kolicina,
+              status: knjigaData.status,
+            });
           }
-          this._knjige.next(knjige);
-          return knjige;
-        })
+        }
+        this._knjige.next(knjige);
+        return knjige;
+      })
       );
   }
 
@@ -102,13 +102,27 @@ export class KnjigeService {
         tap(knjige => {
           const updatedKnjigeIndex = knjige.findIndex(k => k.id === id);
           const updatedKnjige = [...knjige];
-          updatedKnjige[updatedKnjigeIndex] = {
+          // updatedKnjige[updatedKnjigeIndex] = {
+          //   ...knjige[updatedKnjigeIndex],
+          //   ...updatedKnjiga
+          // };
+          const knjigaToUpdate = {
             ...knjige[updatedKnjigeIndex],
             ...updatedKnjiga
           };
+          updatedKnjige[updatedKnjigeIndex] = knjigaToUpdate;
           this._knjige.next(updatedKnjige);
+
+          
+          if (updatedKnjiga.kolicina === 0) {
+            this.promeniStatusKnjige(id, Status.Nema_na_lageru).subscribe();
+          }
+
         })
+
       );
+
+
   }
 
   promeniStatusKnjige(id: string, status: Status) {
@@ -120,7 +134,7 @@ export class KnjigeService {
     knjiga.status = status;
     return this.http.patch(
       `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige/${id}.json?auth=${this.authService.getToken()}`,
-      { status: Status[Status.Arhivirano] }
+      { status: Status[status] }
     ).pipe(
       tap(() => {
         this._knjige.next([...this._knjige.value]);
@@ -136,7 +150,7 @@ export class KnjigeService {
   }
 
   getKomentare(knjigaId: string) {
-    return this.http.get<{[key: string]: Komentar}>(
+    return this.http.get<{ [key: string]: Komentar }>(
       `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/komentari.json?auth=${this.authService.getToken()}&orderBy="knjigaId"&equalTo="${knjigaId}"`
     ).pipe(
       map((komentarData) => {

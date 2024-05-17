@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { PoruciPageRoutingModule } from './poruci-routing.module';
 
 import { PoruciPage } from './poruci.page';
+import { KnjigaElementPoruciComponent } from '../knjiga-element-poruci/knjiga-element-poruci.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { PoruciPage } from './poruci.page';
     IonicModule,
     PoruciPageRoutingModule
   ],
-  declarations: [PoruciPage]
+  declarations: [PoruciPage, KnjigaElementPoruciComponent]
 })
 export class PoruciPageModule {}

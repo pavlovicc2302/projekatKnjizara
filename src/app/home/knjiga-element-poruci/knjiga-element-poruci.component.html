@@ -1,0 +1,12 @@
+<div class="book-info">
+  <img [src]="knjiga.slika" alt="Slika knjige" />
+  <div>
+    <ion-card-title class="knjiga-naslov">{{knjiga.naslov}}</ion-card-title>
+    <ion-card-subtitle class="knjiga-autor">{{knjiga.autor}}</ion-card-subtitle>
+    <div class="knjiga-info">
+      Količina: {{knjiga.kolicina}}<br>
+      Cena: {{knjiga.cena}} RSD<br>
+      Status: {{knjiga.status}}
+    </div>
+  </div>
+</div>
