@@ -13,8 +13,6 @@ export class PocetnaPage implements OnInit {
 
   knjige:  KnjigaModel[];
 
-  isLoading: boolean = false;
-
   constructor(private knjigeService: KnjigeService, private modalCtrl: ModalController, private loadingCtrl: LoadingController) { 
     //this.knjige = this.knjigeService.knjige;
   }
@@ -26,11 +24,9 @@ export class PocetnaPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    this.isLoading = true;
     this.knjigeService.getKnjige(Status.Dostupno).subscribe(
       (knjigeData: any)=>{
           this.knjige = knjigeData;
-          this.isLoading = false;
       }
     )
   }

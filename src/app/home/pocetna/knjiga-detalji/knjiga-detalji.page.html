@@ -32,9 +32,15 @@
   </ion-card>
 
   <ion-card *ngFor="let komentar of komentari">
+    <ion-item>
+      <ion-label>{{komentar.korisnik}}</ion-label>
+    </ion-item>
+    
     <ion-card-content>
       <p>{{ komentar.komentar }}</p>
     </ion-card-content>
-    <ion-button class="dugme">Štampaj</ion-button>  
+    <ion-buttons  style="float: right">
+      <ion-button class="dugme">Štampaj</ion-button> 
+    </ion-buttons> 
   </ion-card>
 </ion-content>

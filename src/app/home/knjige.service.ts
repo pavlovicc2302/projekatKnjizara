@@ -10,9 +10,14 @@ import { AuthService } from '../auth/auth.service';
 export class KnjigeService {
 
   private _knjige = new BehaviorSubject<KnjigaModel[]>([]);
+  private _komentari = new BehaviorSubject<Komentar[]>([]);
 
   get knjige() {
     return this._knjige.asObservable();
+  }
+
+  get komentari() {
+    return this._komentari.asObservable();
   }
 
   constructor(private http: HttpClient, private authService: AuthService) { }
@@ -142,10 +147,28 @@ export class KnjigeService {
     );
   }
 
-  addKomentar(komentarData: { userId: string, knjigaId: string, komentar: string }) {
-    return this.http.post(
+  addKomentar(userId: string, korisnik: string, knjigaId: string, komentar: string ) {
+    let generatedId: string;
+    return this.http.post<{name:string}>(
       `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/komentari.json?auth=${this.authService.getToken()}`,
-      komentarData
+      { userId, korisnik, knjigaId, komentar}
+    ).pipe(
+      switchMap((resData) => {
+        generatedId = resData.name;
+        return this.komentari;
+      }),
+      take(1),
+      tap((komentari) => {
+        this._komentari.next(
+          komentari.concat({
+            id: generatedId,
+            userId,
+            korisnik,
+            knjigaId,
+            komentar
+          })
+        );
+      })
     );
   }
 
@@ -157,9 +180,17 @@ export class KnjigeService {
         const komentari: Komentar[] = [];
         for (const key in komentarData) {
           if (komentarData.hasOwnProperty(key)) {
-            komentari.push({ id: key, ...komentarData[key] });
+            komentari.push({ 
+              id: key, 
+              userId: komentarData[key].userId,
+              korisnik: komentarData[key].korisnik,
+              knjigaId: komentarData[key].knjigaId,
+              komentar: komentarData[key].komentar,
+            });
           }
         }
+        console.log(komentari);
+        this._komentari.next(komentari);
         return komentari;
       })
     );

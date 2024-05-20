@@ -49,7 +49,36 @@ export class KnjigaDetaljiPage implements OnInit {
       )
       .subscribe((knjiga) => {
         this.knjiga = knjiga;
-        this.loadKomentari();
+        this.knjigaService.komentari.subscribe((komentari: any)=>{
+          this.komentari = komentari;
+        })
+      });
+
+    this.knjigaService.knjige.subscribe((knjige) => {
+      const updatedKnjiga = knjige.find((k) => k.id === this.knjiga.id);
+      if (updatedKnjiga) {
+        this.knjiga = updatedKnjiga;
+      }
+    });
+    
+  }
+
+  ionViewWillEnter(){
+    this.route.paramMap
+      .pipe(
+        switchMap((paramMap) => {
+          const knjigaId = paramMap.get('knjigaId');
+          return this.knjigaService.getKnjiga(knjigaId);
+        })
+      )
+      .subscribe((knjiga) => {
+        this.knjiga = knjiga;
+        this.knjigaService.getKomentare(this.knjiga.id).subscribe(
+          (komentariData: any)=>{
+            console.log(komentariData);
+            this.komentari = komentariData;
+          }
+        )
       });
 
     this.knjigaService.knjige.subscribe((knjige) => {
@@ -114,6 +143,9 @@ export class KnjigaDetaljiPage implements OnInit {
 
   async addKomentar() {
     const userId = localStorage.getItem('ulogovaniID');
+    let korisnik = localStorage.getItem('ulogovani');
+    const displayNameParts = korisnik.split(' ');
+    const ime = displayNameParts[0];
     if (!userId) {
       this.presentToast('Korisnik nije prijavljen!', 'bottom');
       return;
@@ -122,17 +154,22 @@ export class KnjigaDetaljiPage implements OnInit {
     const komentarData = {
       id: null,
       userId: userId,
+      korisnik: ime,
       knjigaId: this.knjiga.id,
       komentar: this.komentar,
     };
 
-    this.knjigaService.addKomentar(komentarData).subscribe(
-      (noviKomentar: any) => {
+    this.knjigaService.addKomentar(komentarData.userId, komentarData.korisnik, komentarData.knjigaId, komentarData.komentar).subscribe(
+      () => {
         console.log('Komentar je uspešno sačuvan.');
         this.presentToast('Komentar je objavljen!', 'bottom');
         this.komentar = '';
-        this.komentari.push(noviKomentar);
-      },
+        this.knjigaService.getKomentare(this.knjiga.id).subscribe(
+        (komentariData: any) => {
+          this.komentari = komentariData;
+        }
+      );
+    },
       (error) => {
         console.error('Došlo je do greške prilikom čuvanja komentara:', error);
         this.presentToast('Greška pri objavljivanju komentara!', 'bottom');
@@ -149,11 +186,4 @@ export class KnjigaDetaljiPage implements OnInit {
 
     await toast.present();
   }
-
-  loadKomentari() {
-    this.knjigaService.getKomentare(this.knjiga.id).subscribe((komentari) => {
-      this.komentari = komentari;
-    });
-  }
-
 }

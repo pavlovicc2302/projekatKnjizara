@@ -22,6 +22,7 @@ export enum Status{
 export interface Komentar {
     id: string;
     userId: string;
+    korisnik: string;
     knjigaId: string;
     komentar: string;
   }
