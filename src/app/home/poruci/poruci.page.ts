@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { InfiniteScrollCustomEvent, ModalController } from '@ionic/angular';
+import { AlertController, InfiniteScrollCustomEvent, ModalController } from '@ionic/angular';
 import { KnjigaModel, Status } from '../knjiga.model';
 import { KnjigeService } from '../knjige.service';
+import { Narudzbenica, StavkaNarudzbenice } from '../narudzbenica.model';
 
 @Component({
   selector: 'app-poruci',
@@ -11,7 +12,16 @@ import { KnjigeService } from '../knjige.service';
 export class PoruciPage implements OnInit {
   knjige:  KnjigaModel[];
 
-  constructor(private knjigeService: KnjigeService, private modalCtrl: ModalController) { 
+  narudzbenica: Narudzbenica = {
+    id: '',
+    userId: '',
+    ukupnaKolicina: 0,
+    ukupnaCena: 0,
+    datum: new Date(),
+    stavke: []
+  };
+
+  constructor(private knjigeService: KnjigeService, private modalCtrl: ModalController, private alertController: AlertController) { 
     //this.knjige = this.knjigeService.knjige;
   }
 
@@ -29,11 +39,37 @@ export class PoruciPage implements OnInit {
     )
   }
 
-  onIonInfinite(ev) {
-    
-    setTimeout(() => {
-      (ev as InfiniteScrollCustomEvent).target.complete();
-    }, 500);
-  }
+  
 
+  async prikaziPopup() {
+    const alert = await this.alertController.create({
+      header: 'Vaša narudžbenica',
+      subHeader: 'Knjige koje ste poručili:',
+      message: this.formatirajNarudzbenicu(),
+      buttons: [
+        {
+          text: 'Ne',
+          role: 'cancel'
+        },
+        {
+          text: 'Da',
+          handler: () => {
+            // Implementirajte logiku za čuvanje narudžbenice
+            // Možete koristiti this.narudzbenica
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
+  }
+  
+  formatirajNarudzbenicu() {
+    let narudzbenicaText = '';
+    this.narudzbenica.stavke.forEach(stavka => {
+      narudzbenicaText += `${stavka.naslov} - ${stavka.kolicina} x ${stavka.cena} RSD\n`;
+    });
+    narudzbenicaText += `Ukupna cena: ${this.narudzbenica.ukupnaCena} RSD`;
+    return narudzbenicaText;
+  }
 }

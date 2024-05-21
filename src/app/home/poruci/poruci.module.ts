@@ -16,6 +16,6 @@ import { KnjigaElementPoruciComponent } from '../knjiga-element-poruci/knjiga-el
     IonicModule,
     PoruciPageRoutingModule
   ],
-  declarations: [PoruciPage, KnjigaElementPoruciComponent]
+  declarations: [PoruciPage, KnjigaElementPoruciComponent,]
 })
 export class PoruciPageModule {}

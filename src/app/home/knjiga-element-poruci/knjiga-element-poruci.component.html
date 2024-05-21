@@ -8,8 +8,8 @@
     <div class="knjiga-info">
       Cena: {{ knjiga.cena }} RSD<br /><br>
       Količina za poručivanje:
-      <ion-input class="kolicina-porucivanje" type="text" name="poruciti" required></ion-input>
-      <ion-button> Dodaj</ion-button>
+      <ion-input [(ngModel)]="kolicina" class="kolicina-porucivanje" type="number" name="poruciti"></ion-input>
+      <ion-button (click)="dodajUKorpu(knjiga)">Dodaj</ion-button>
     </div>
   </div>
 </div>
