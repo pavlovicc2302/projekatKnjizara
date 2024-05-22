@@ -32,7 +32,7 @@ export class KnjigaDetaljiPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private knjigaService: KnjigeService,
+    private knjigeService: KnjigeService,
     private router: Router,
     private alertController: AlertController,
     private modalCtrl: ModalController,
@@ -44,17 +44,17 @@ export class KnjigaDetaljiPage implements OnInit {
       .pipe(
         switchMap((paramMap) => {
           const knjigaId = paramMap.get('knjigaId');
-          return this.knjigaService.getKnjiga(knjigaId);
+          return this.knjigeService.getKnjiga(knjigaId);
         })
       )
       .subscribe((knjiga) => {
         this.knjiga = knjiga;
-        this.knjigaService.komentari.subscribe((komentari: any)=>{
+        this.knjigeService.komentari.subscribe((komentari: any)=>{
           this.komentari = komentari;
         })
       });
 
-    this.knjigaService.knjige.subscribe((knjige) => {
+    this.knjigeService.knjige.subscribe((knjige) => {
       const updatedKnjiga = knjige.find((k) => k.id === this.knjiga.id);
       if (updatedKnjiga) {
         this.knjiga = updatedKnjiga;
@@ -68,12 +68,12 @@ export class KnjigaDetaljiPage implements OnInit {
       .pipe(
         switchMap((paramMap) => {
           const knjigaId = paramMap.get('knjigaId');
-          return this.knjigaService.getKnjiga(knjigaId);
+          return this.knjigeService.getKnjiga(knjigaId);
         })
       )
       .subscribe((knjiga) => {
         this.knjiga = knjiga;
-        this.knjigaService.getKomentare(this.knjiga.id).subscribe(
+        this.knjigeService.getKomentare(this.knjiga.id).subscribe(
           (komentariData: any)=>{
             console.log(komentariData);
             this.komentari = komentariData;
@@ -81,7 +81,7 @@ export class KnjigaDetaljiPage implements OnInit {
         )
       });
 
-    this.knjigaService.knjige.subscribe((knjige) => {
+    this.knjigeService.knjige.subscribe((knjige) => {
       const updatedKnjiga = knjige.find((k) => k.id === this.knjiga.id);
       if (updatedKnjiga) {
         this.knjiga = updatedKnjiga;
@@ -98,7 +98,7 @@ export class KnjigaDetaljiPage implements OnInit {
   }
 
   promeniStatusKnjige(status: Status) {
-    this.knjigaService.promeniStatusKnjige(this.knjiga.id, status).subscribe(
+    this.knjigeService.promeniStatusKnjige(this.knjiga.id, status).subscribe(
       () => {
         console.log('Knjiga je arhivirana.');
         this.router.navigateByUrl('/home/tabs/pocetna');
@@ -124,7 +124,7 @@ export class KnjigaDetaljiPage implements OnInit {
     modal.onDidDismiss().then((resultData) => {
       if (resultData.role === 'confirm') {
         const updatedKnjiga = resultData.data.knjigaData;
-        this.knjigaService
+        this.knjigeService
           .updateKnjiga(this.knjiga.id, updatedKnjiga)
           .subscribe(
             () => {
@@ -159,12 +159,12 @@ export class KnjigaDetaljiPage implements OnInit {
       komentar: this.komentar,
     };
 
-    this.knjigaService.addKomentar(komentarData.userId, komentarData.korisnik, komentarData.knjigaId, komentarData.komentar).subscribe(
+    this.knjigeService.addKomentar(komentarData.userId, komentarData.korisnik, komentarData.knjigaId, komentarData.komentar).subscribe(
       () => {
         console.log('Komentar je uspešno sačuvan.');
         this.presentToast('Komentar je objavljen!', 'bottom');
         this.komentar = '';
-        this.knjigaService.getKomentare(this.knjiga.id).subscribe(
+        this.knjigeService.getKomentare(this.knjiga.id).subscribe(
         (komentariData: any) => {
           this.komentari = komentariData;
         }
@@ -175,6 +175,13 @@ export class KnjigaDetaljiPage implements OnInit {
         this.presentToast('Greška pri objavljivanju komentara!', 'bottom');
       }
     );
+  }
+
+  deleteKomentar(id:string){
+    this.knjigeService.deleteKomentar(id).subscribe(() => {
+      this.komentari = this.komentari.filter(k => k.id !== id);
+      this.presentToast('Komentar je izbrisan!','bottom')
+    });
   }
 
   async presentToast(message: string, position: 'top' | 'middle' | 'bottom') {

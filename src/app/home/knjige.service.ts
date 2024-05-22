@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { KnjigaModel, Komentar, Status } from './knjiga.model';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, map, switchMap, take, tap } from 'rxjs';
+import { BehaviorSubject, Observable, map, switchMap, take, tap } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({
@@ -172,6 +172,16 @@ export class KnjigeService {
     );
   }
 
+  deleteKomentar(id: string): Observable<void> {
+    const url = `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/komentari/${id}.json?auth=${this.authService.getToken()}`;
+    return this.http.delete<void>(url).pipe(
+      tap(() => {
+        const updatedKomentari = this._komentari.value.filter(k => k.id !== id);
+        this._komentari.next(updatedKomentari);
+      })
+    );
+  }
+  
   getKomentare(knjigaId: string) {
     return this.http.get<{ [key: string]: Komentar }>(
       `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/komentari.json?auth=${this.authService.getToken()}&orderBy="knjigaId"&equalTo="${knjigaId}"`

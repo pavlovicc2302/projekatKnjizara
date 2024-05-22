@@ -29,13 +29,14 @@ export class KnjigaElementPoruciComponent implements OnInit {
   ngOnInit() { }
 
   promeniBoju: boolean = false;
+  dodatoUKorpu:boolean = false;
   brojac: number = 0;
 
   dodajUKorpu() {
     console.log(this.kolicina)
     if (this.kolicina > 0) {
       this.promeniBoju = true;  // Toggle promenu boje
-
+      this.dodatoUKorpu = true;
       const stavka: StavkaNarudzbenice = {
         id: '',
         knjigaId: this.knjiga.id,
@@ -46,8 +47,7 @@ export class KnjigaElementPoruciComponent implements OnInit {
         iznos: this.kolicina * this.knjiga.cena
       };
       console.log(stavka)
-      this.narudzbenicaService.dodajStavku(stavka);
-      
+      this.narudzbenicaService.dodajStavku(stavka); 
     }
     this.brojac++;
   }

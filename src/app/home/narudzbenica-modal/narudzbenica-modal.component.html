@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>Vaša narudžbenica</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="close()">Zatvori</ion-button>
+      <ion-button (click)="close()"><ion-icon name="close-circle-outline"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -12,23 +12,33 @@
     <ion-item *ngFor="let stavka of nizStavki">
       <ion-label>
         <h2>{{ stavka.naslov }}</h2>
-        <p> {{stavka.kolicina}} x {{stavka.cena}} RSD</p>
-        
+        <p>{{ stavka.kolicina }} x {{ stavka.cena }} RSD</p>
       </ion-label>
     </ion-item>
   </ion-list>
   <ion-item>
     <ion-label>
-      <h2>Ukupna cena: {{ ukupnaCena() }} RSD</h2>
+      <p class="racun">Ukupna cena: {{ ukupnaCena() }} RSD</p>
     </ion-label>
   </ion-item>
-  <ion-item>
-    <ion-label>
-      <h2>Da li sigurno želite da naručite ove knjige?</h2>
-    </ion-label>
+
+  <ion-item *ngIf="ukupnaKolicina() >0">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <h4>Da li sigurno želite da naručite ove knjige?</h4>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button class="potvrda-da" (click)="potvrdiNarudzbenicu()" color="secondary">Da</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button class="potvrda-ne" (click)="close()" >Ne</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-item>
-  <ion-item>
-    <ion-button expand="full" (click)="potvrdiNarudzbenicu()">Da</ion-button>
-    <ion-button expand="full" color="light" (click)="close()">Ne</ion-button>
-  </ion-item>
+  
+    
 </ion-content>

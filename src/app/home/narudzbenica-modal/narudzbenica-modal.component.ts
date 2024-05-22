@@ -41,16 +41,7 @@ export class NarudzbenicaModalComponent implements OnInit {
 
     console.log(this.ukupnaCena())
     console.log(this.ukupnaKolicina())
-    this.narudzbenicaService
-      .addNarudzbenica(this.ukupnaKolicina(), this.ukupnaCena())
-      .subscribe(() => {
-        this.modalCtrl.dismiss({ confirm: true });
-      }, (error) => {
-        // Handle error
-        console.error('Error while adding narudzbenica:', error);
-      });
-
-       // Koristi se forkJoin da se saceka da svi Observable-i završe
+   
     forkJoin(promeneStatusa).subscribe({
       next: () => {
         // Kada su sve promene statusa završene, kreira se narudzbenica
