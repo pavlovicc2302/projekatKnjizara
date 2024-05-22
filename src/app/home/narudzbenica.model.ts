@@ -3,7 +3,7 @@ export interface Narudzbenica {
     user?:string,
     ukupnaKolicina?: number,
     ukupnaCena?: number,
-    datum?: Date,
+    datum?: string,
     stavke?: StavkaNarudzbenice[],
 }
 

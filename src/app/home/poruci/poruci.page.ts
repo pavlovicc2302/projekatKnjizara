@@ -39,7 +39,7 @@ export class PoruciPage implements OnInit {
   async prikaziPopup() {
     const modal = await this.modalCtrl.create({
       component: NarudzbenicaModalComponent,
-      //componentProps: { narudzbenica: this.narudzbenica } //NISAM SIG
+      // componentProps: { narudzbenica: this.narudzbenice } //NISAM SIG
     });
 
     modal.onDidDismiss().then((result) => {

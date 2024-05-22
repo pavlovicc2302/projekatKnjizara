@@ -22,7 +22,7 @@ export class KnjigaElementPoruciComponent implements OnInit {
     status: Status.Dostupno,
     // userId: '1'
   };
-  kolicina: number = 0;
+  kolicina: number;
   
   constructor(private narudzbenicaService: NarudzbenicaService) { }
 
@@ -47,7 +47,7 @@ export class KnjigaElementPoruciComponent implements OnInit {
       };
       console.log(stavka)
       this.narudzbenicaService.dodajStavku(stavka);
-      this.kolicina = 0;
+      
     }
     this.brojac++;
   }

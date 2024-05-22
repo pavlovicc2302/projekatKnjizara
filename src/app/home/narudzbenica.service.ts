@@ -3,6 +3,9 @@ import { BehaviorSubject, switchMap, take, tap } from 'rxjs';
 import { Narudzbenica, StavkaNarudzbenice } from './narudzbenica.model';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
+import { KnjigeService } from './knjige.service';
+import { Status } from './knjiga.model';
 
 /*interface NarudzbenicaData {
   userId: string;
@@ -25,6 +28,8 @@ interface StavkaNarudzbeniceData {
   providedIn: 'root',
 })
 export class NarudzbenicaService {
+
+  noviDatum:string;
   private nizStavki: StavkaNarudzbenice[] = [];
 
   private _stavke = new BehaviorSubject<StavkaNarudzbenice[]>(this.nizStavki);
@@ -41,7 +46,7 @@ export class NarudzbenicaService {
 
   //narudzbenica$ = this._narudzbenica.asObservable();
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient, private authService: AuthService, private router:Router, private knjigeService:KnjigeService) {}
 
   dodajStavku(stavka: StavkaNarudzbenice) {
     stavka.id = this.nizStavki.length + 1 + '';
@@ -62,17 +67,23 @@ export class NarudzbenicaService {
      return this._narudzbenice.getValue();
    }*/
 
-  addNarudzbenica(
-    ukupnaKolicina: number,
-    ukupnaCena: number,
-    stavke: StavkaNarudzbenice[] = this.nizStavki
-  ) {
+  namestiDatum(datum:Date){
+    const formatDatum = (num: number) => num < 10 ? `0${num}` : num;
+
+    const dan = formatDatum(datum.getDate());
+    const mesec = formatDatum(datum.getMonth() + 1);
+    const godina = datum.getFullYear();
+    const sati = formatDatum(datum.getHours());
+    const minuti = formatDatum(datum.getMinutes());
+
+    this.noviDatum = `${dan}.${mesec}.${godina}. ${sati}:${minuti}`;
+    return this.noviDatum;
+  }
+  addNarudzbenica(ukupnaKolicina: number,ukupnaCena: number, stavke: StavkaNarudzbenice[] = this.nizStavki) {
     let generatedId;
-    let user =localStorage.getItem('ulogovani') +':' + localStorage.getItem('ulogovaniID')
-    
-    let datum = new Date();
-    
-    
+    let user = localStorage.getItem('ulogovani') +':' + localStorage.getItem('ulogovaniID')
+    let datum = this.namestiDatum(new Date());
+    console.log(datum)
     return this.http
       .post<{ name: string }>(
         `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/narudzbenice.json?auth=${this.authService.getToken()}`,
@@ -95,8 +106,10 @@ export class NarudzbenicaService {
               stavke,
             })
           );
+          
           this.nizStavki = [];
           this._stavke.next([]);
+          this.router.navigateByUrl('/home/tabs/pocetna')
         })
       );
   }
