@@ -26,6 +26,9 @@ get Status() {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
+
 
 }

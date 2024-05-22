@@ -7,6 +7,7 @@
       Količina: {{knjiga.kolicina}}<br>
       Cena: {{knjiga.cena}} RSD<br>
       Status: {{knjiga.status}}
+      <p *ngIf="knjiga.kolicina < 5" class="ostaloMalo">Nije ostalo još puno</p>
     </div>
   </div>
 </div>
