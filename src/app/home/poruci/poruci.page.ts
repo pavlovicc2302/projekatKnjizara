@@ -3,6 +3,8 @@ import { AlertController, InfiniteScrollCustomEvent, ModalController } from '@io
 import { KnjigaModel, Status } from '../knjiga.model';
 import { KnjigeService } from '../knjige.service';
 import { Narudzbenica, StavkaNarudzbenice } from '../narudzbenica.model';
+import { NarudzbenicaService } from '../narudzbenica.service';
+import { NarudzbenicaModalComponent } from '../narudzbenica-modal/narudzbenica-modal.component';
 
 @Component({
   selector: 'app-poruci',
@@ -12,17 +14,12 @@ import { Narudzbenica, StavkaNarudzbenice } from '../narudzbenica.model';
 export class PoruciPage implements OnInit {
   knjige:  KnjigaModel[];
 
-  narudzbenica: Narudzbenica = {
-    id: '',
-    userId: '',
-    ukupnaKolicina: 0,
-    ukupnaCena: 0,
-    datum: new Date(),
-    stavke: []
-  };
+  narudzbenice: Narudzbenica[];
 
-  constructor(private knjigeService: KnjigeService, private modalCtrl: ModalController, private alertController: AlertController) { 
-    //this.knjige = this.knjigeService.knjige;
+  constructor(private knjigeService: KnjigeService, private narudzbenicaService: NarudzbenicaService, private modalCtrl: ModalController, private alertController: AlertController) { 
+      this.narudzbenicaService.narudzbenice.subscribe(narudzbenice => {
+        this.narudzbenice = narudzbenice;
+      });
   }
 
   ngOnInit() {
@@ -39,37 +36,27 @@ export class PoruciPage implements OnInit {
     )
   }
 
-  
-
   async prikaziPopup() {
-    const alert = await this.alertController.create({
-      header: 'Vaša narudžbenica',
-      subHeader: 'Knjige koje ste poručili:',
-      message: this.formatirajNarudzbenicu(),
-      buttons: [
-        {
-          text: 'Ne',
-          role: 'cancel'
-        },
-        {
-          text: 'Da',
-          handler: () => {
-            // Implementirajte logiku za čuvanje narudžbenice
-            // Možete koristiti this.narudzbenica
-          }
-        }
-      ]
+    const modal = await this.modalCtrl.create({
+      component: NarudzbenicaModalComponent,
+      //componentProps: { narudzbenica: this.narudzbenica } //NISAM SIG
     });
-  
-    await alert.present();
+
+    modal.onDidDismiss().then((result) => {
+      if (result.data?.confirm) {
+        this.showConfirmation();
+      }
+    });
+
+    await modal.present();
   }
-  
-  formatirajNarudzbenicu() {
-    let narudzbenicaText = '';
-    this.narudzbenica.stavke.forEach(stavka => {
-      narudzbenicaText += `${stavka.naslov} - ${stavka.kolicina} x ${stavka.cena} RSD\n`;
+
+  async showConfirmation() {
+    const alert = await this.alertController.create({
+      header: 'Uspešno ste naručili knjige!',
+      buttons: ['OK']
     });
-    narudzbenicaText += `Ukupna cena: ${this.narudzbenica.ukupnaCena} RSD`;
-    return narudzbenicaText;
+
+    await alert.present();
   }
 }

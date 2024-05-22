@@ -77,4 +77,7 @@ export class AuthService {
   getUserId() {
     return this.user.id;
   }
+  getUserDisplayName() {
+    return this.user.displayName;
+  }
 }

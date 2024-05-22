@@ -1,10 +1,10 @@
 export interface Narudzbenica {
-    id:string,
-    userId:string,
-    ukupnaKolicina: number,
-    ukupnaCena: number,
-    datum: Date,
-    stavke: StavkaNarudzbenice[],
+    id?:string,
+    user?:string,
+    ukupnaKolicina?: number,
+    ukupnaCena?: number,
+    datum?: Date,
+    stavke?: StavkaNarudzbenice[],
 }
 
 export interface StavkaNarudzbenice {
