@@ -15,6 +15,7 @@ export class KnjigaDetaljiPage implements OnInit {
   Status = Status;
   komentar: string = '';
   komentari: Komentar[] = [];
+  ulogovaniID: string = '';
 
   knjiga: KnjigaModel = {
     id: '3',
@@ -40,6 +41,7 @@ export class KnjigaDetaljiPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.ulogovaniID = localStorage.getItem('ulogovaniID');
     this.route.paramMap
       .pipe(
         switchMap((paramMap) => {
