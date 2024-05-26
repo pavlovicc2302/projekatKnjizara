@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { NarudzbenicaService } from '../narudzbenica.service';
 import { StavkaNarudzbenice } from '../narudzbenica.model';
 import { forkJoin } from 'rxjs';
 import { KnjigeService } from '../knjige.service';
 import { Status } from '../knjiga.model';
+import { jsPDF} from 'jspdf';
 
 @Component({
   selector: 'app-narudzbenica-modal',
@@ -33,6 +34,10 @@ export class NarudzbenicaModalComponent implements OnInit {
   }
 
   potvrdiNarudzbenicu() {
+
+    //kada se klikne da, pozove se ova metoda i ona ce napraviti pdf
+    this.generatePDF();
+    
 
     const promeneStatusa = this.nizStavki.map(stavka =>
       this.knjigeService.promeniStatusKnjige(stavka.knjigaId, Status.Na_cekanju)
@@ -66,4 +71,49 @@ export class NarudzbenicaModalComponent implements OnInit {
   ukupnaKolicina():number{
     return this.nizStavki.reduce((total, stavka)=> total + stavka.kolicina,0)
   }
+
+
+
+  generatePDF() {
+    const doc = new jsPDF();
+    
+    doc.setFontSize(16);
+    doc.text('Narudzbenica', 10, 10);
+  
+    doc.setFontSize(12);
+    doc.text('Spisak knjiga za narudzbenicu:', 10, 20);
+    doc.line(10, 22, 200, 22); 
+  
+    let y = 30;
+    this.nizStavki.forEach((stavka, index) => {
+      doc.text(`${index + 1}. ${stavka.naslov}`, 10, y);
+      doc.text(`Kolicina: ${stavka.kolicina}`, 150, y);
+      doc.text(`Cena: ${stavka.cena.toFixed(2)} RSD`, 10, y + 10);
+      doc.text(`Ukupan iznos: ${(stavka.kolicina * stavka.cena).toFixed(2)} RSD`, 150, y + 10);
+      y += 20;
+    });
+  
+    doc.line(10, y, 200, y); 
+    y += 10;
+    doc.text(`Ukupna kolicina: ${this.ukupnaKolicina()}`, 10, y);
+    doc.text(`Ukupna cena: ${this.ukupnaCena().toFixed(2)} RSD`, 150, y);
+  
+    doc.save('narudzbenica.pdf');
+  }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
