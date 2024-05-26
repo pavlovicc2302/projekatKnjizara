@@ -41,7 +41,7 @@
       <p>{{ komentar.komentar }}</p>
     </ion-card-content>
     <ion-buttons  style="float: right">
-      <ion-button class="dugme">Štampaj</ion-button> 
+      <ion-button class="dugme" (click)="generateCommentsPDF(komentar)">Štampaj</ion-button> 
     </ion-buttons> 
   </ion-card>
 </ion-content>

@@ -5,6 +5,8 @@ import { KnjigeService } from '../../knjige.service';
 import { switchMap, tap } from 'rxjs';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { KnjigaModalComponent } from '../../knjiga-modal/knjiga-modal.component';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-knjiga-detalji',
@@ -195,4 +197,22 @@ export class KnjigaDetaljiPage implements OnInit {
 
     await toast.present();
   }
+
+
+  async generateCommentsPDF(komentar: Komentar) {
+    const doc = new jsPDF();
+
+    doc.setFontSize(16);
+    doc.text('Komentar', 10, 10);
+
+    doc.setFontSize(12);
+    doc.text(`Korisnik: ${komentar.korisnik}`, 10, 20);
+    doc.text(`${komentar.komentar}`, 10, 30);
+
+    doc.save(`komentar_${komentar.korisnik}.pdf`);
+  }
+
+
+
+
 }
