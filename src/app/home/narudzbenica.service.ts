@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, switchMap, take, tap } from 'rxjs';
-import { Narudzbenica, StavkaNarudzbenice } from './narudzbenica.model';
+import { Narudzbenica, StatusNarudzbenice, StavkaNarudzbenice } from './narudzbenica.model';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
@@ -79,7 +79,7 @@ export class NarudzbenicaService {
     this.noviDatum = `${dan}.${mesec}.${godina}. ${sati}:${minuti}`;
     return this.noviDatum;
   }
-  addNarudzbenica(ukupnaKolicina: number,ukupnaCena: number, stavke: StavkaNarudzbenice[] = this.nizStavki) {
+  addNarudzbenica(ukupnaKolicina: number,ukupnaCena: number,status:StatusNarudzbenice, stavke: StavkaNarudzbenice[]= this.nizStavki) {
     let generatedId;
     let user = localStorage.getItem('ulogovani') +':' + localStorage.getItem('ulogovaniID')
     let datum = this.namestiDatum(new Date());
@@ -87,7 +87,7 @@ export class NarudzbenicaService {
     return this.http
       .post<{ name: string }>(
         `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/narudzbenice.json?auth=${this.authService.getToken()}`,
-        { user, ukupnaKolicina, ukupnaCena, datum, stavke }
+        { user, ukupnaKolicina, ukupnaCena, datum, stavke, status }
       )
       .pipe(
         switchMap((resData) => {
@@ -104,6 +104,7 @@ export class NarudzbenicaService {
               ukupnaCena,
               datum,
               stavke,
+              status
             })
           );
           

@@ -5,6 +5,12 @@ export interface Narudzbenica {
     ukupnaCena?: number,
     datum?: string,
     stavke?: StavkaNarudzbenice[],
+    status?: StatusNarudzbenice
+}
+
+export enum StatusNarudzbenice{
+    Neobradjena ="Neobradjena",
+    Obradjena = "Obradjena"
 }
 
 export interface StavkaNarudzbenice {

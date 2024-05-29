@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { NarudzbenicaService } from '../narudzbenica.service';
-import { StavkaNarudzbenice } from '../narudzbenica.model';
+import { StatusNarudzbenice, StavkaNarudzbenice } from '../narudzbenica.model';
 import { forkJoin } from 'rxjs';
 import { KnjigeService } from '../knjige.service';
 import { Status } from '../knjiga.model';
@@ -51,7 +51,7 @@ export class NarudzbenicaModalComponent implements OnInit {
       next: () => {
         // Kada su sve promene statusa završene, kreira se narudzbenica
         this.narudzbenicaService
-          .addNarudzbenica(this.ukupnaKolicina(), this.ukupnaCena())
+          .addNarudzbenica(this.ukupnaKolicina(), this.ukupnaCena(),StatusNarudzbenice.Neobradjena)
           .subscribe(() => {
             this.modalCtrl.dismiss({ confirm: true });
           }, (error) => {
