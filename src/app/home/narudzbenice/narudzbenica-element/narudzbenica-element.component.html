@@ -1,18 +1,19 @@
 <div class="order-info">
   <div>
-    <ion-card-title class="order-naslov">Narudzbenica</ion-card-title>
+    <ion-card-title class="order-naslov">Narudžbenica</ion-card-title>
     <ion-card-subtitle class="order-date">{{narudzbenica.datum}}</ion-card-subtitle>
     <div class="order-info">
       <div class="order-total">
           <b> Količina: {{narudzbenica.ukupnaKolicina}}<br>
-          Cena: {{narudzbenica.ukupnaCena}} RSD<br></b>
-          <ion-button > Stiglo</ion-button><br>
+            <hr class="divider">
+          Iznos: {{narudzbenica.ukupnaCena}} RSD<br></b><br>
+          <ion-button class="button-stiglo" color="success"> Stiglo</ion-button><br>
       </div>
       <div class="stavke-lista">
         <div class="stavka-info" *ngFor="let stavka of narudzbenica.stavke">
-          <div>Naziv: {{stavka.naslov}}</div>
-          <div>Količina: {{stavka.kolicina}}</div>
-          <div>Cena: {{stavka.cena}} RSD</div>
+         
+          <p> <b>{{stavka.kolicina}}</b> x "{{stavka.naslov}}"</p>
+          <p>Cena: <b>{{stavka.cena}} RSD</b></p>
         </div>
       </div>
     </div>

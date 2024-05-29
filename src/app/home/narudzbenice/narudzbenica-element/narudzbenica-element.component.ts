@@ -22,7 +22,7 @@ export class NarudzbenicaElementComponent implements OnInit {
     return StatusNarudzbenice;
   }
 
-  constructor(private narudzbenicaService: NarudzbenicaService) {}
+  constructor() {}
 
   ngOnInit(): void {
   

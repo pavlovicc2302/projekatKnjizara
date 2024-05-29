@@ -14,8 +14,15 @@
   color: #333;
 }
 
-.order-total{
+.order-total {
   display: grid;
+  padding-right: 10px;
+
+  .divider {
+    margin: 10px 0;
+    border: none;
+    border-top: 1px solid #ccc;
+  }
 }
 .order-naslov {
   font-size: 25px;
@@ -28,14 +35,11 @@
 
 .stavke-lista {
   margin-top: 16px;
-}
-
-.stavke-lista {
   .stavka-info {
     margin-bottom: 12px;
-    padding: 12px;
-    background-color: #fff;
+    padding: 5px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #bed7dc;
   }
 }
