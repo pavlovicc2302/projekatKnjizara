@@ -16,6 +16,10 @@ const routes: Routes = [
         loadChildren: () => import('./poruci/poruci.module').then( m => m.PoruciPageModule)
       },
       {
+        path: 'narudzbenice',
+        loadChildren: () => import('./narudzbenice/narudzbenice.module').then( m => m.NarudzbenicePageModule)
+      },
+      {
         path: 'profil',
         loadChildren: () => import('./profil/profil.module').then( m => m.ProfilPageModule)
       },
@@ -31,7 +35,9 @@ const routes: Routes = [
     path: '',
     redirectTo: '/home/tabs/pocetna',
     pathMatch: 'full'
-  }
+  },
+  
+
   
 ];
 
