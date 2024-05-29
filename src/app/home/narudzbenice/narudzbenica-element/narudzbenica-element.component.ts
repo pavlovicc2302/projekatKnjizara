@@ -25,11 +25,6 @@ export class NarudzbenicaElementComponent implements OnInit {
   constructor(private narudzbenicaService: NarudzbenicaService) {}
 
   ngOnInit(): void {
-    this.narudzbenicaService.getNarudzbenice(this.narudzbenica.status).subscribe((narudzbenice) => {
-      const currentNarudzbenica = narudzbenice.find(n => n.id === this.narudzbenica.id);
-      if (currentNarudzbenica) {
-        this.narudzbenica = currentNarudzbenica;
-      }
-    });
+  
   }
 }
