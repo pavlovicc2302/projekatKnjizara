@@ -109,4 +109,23 @@ export class NarudzbenicaService {
       })
     );
   }
+
+  updateNarudzbenicaStatus(id: string, status: StatusNarudzbenice) {
+    return this.http
+      .patch(
+        `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/narudzbenice/${id}.json?auth=${this.authService.getToken()}`,
+        { status: StatusNarudzbenice[status] }
+      )
+      .pipe(
+        switchMap(() => this.narudzbenice),
+        take(1),
+        tap(narudzbenice => {
+          const updatedNarudzbenicaIndex = narudzbenice.findIndex(n => n.id === id);
+          const updatedNarudzbenica = { ...narudzbenice[updatedNarudzbenicaIndex], status };
+          const updatedNarudzbenice = [...narudzbenice];
+          updatedNarudzbenice[updatedNarudzbenicaIndex] = updatedNarudzbenica;
+          this._narudzbenice.next(updatedNarudzbenice);
+        })
+      );
+  }
 }

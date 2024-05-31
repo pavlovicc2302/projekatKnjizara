@@ -104,7 +104,6 @@ export class KnjigaDetaljiPage implements OnInit {
   promeniStatusKnjige(status: Status) {
     this.knjigeService.promeniStatusKnjige(this.knjiga.id, status).subscribe(
       () => {
-        console.log('Knjiga je arhivirana.');
         this.router.navigateByUrl('/home/tabs/pocetna');
         this.presentAlert('Knjiga je arhivirana!');
       },

@@ -7,7 +7,7 @@
           <b> Količina: {{narudzbenica.ukupnaKolicina}}<br>
             <hr class="divider">
           Iznos: {{narudzbenica.ukupnaCena}} RSD<br></b><br>
-          <ion-button class="button-stiglo" color="success"> Stiglo</ion-button><br>
+          <ion-button class="button-stiglo" color="success" (click)="onStiglo()"> Stiglo</ion-button><br>
       </div>
       <div class="stavke-lista">
         <div class="stavka-info" *ngFor="let stavka of narudzbenica.stavke">

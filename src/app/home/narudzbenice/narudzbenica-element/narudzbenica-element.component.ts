@@ -1,6 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Narudzbenica, StatusNarudzbenice, StavkaNarudzbenice } from '../../narudzbenica.model';
+import {
+  Narudzbenica,
+  StatusNarudzbenice,
+  StavkaNarudzbenice,
+} from '../../narudzbenica.model';
 import { NarudzbenicaService } from '../../narudzbenica.service';
+import { KnjigeService } from '../../knjige.service';
+import { Status } from '../../knjiga.model';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-narudzbenica-element',
@@ -22,9 +31,44 @@ export class NarudzbenicaElementComponent implements OnInit {
     return StatusNarudzbenice;
   }
 
-  constructor() {}
+  constructor(
+    private narudzbenicaService: NarudzbenicaService,
+    private knjigeService: KnjigeService,
+    private router: Router,
+    private alertController: AlertController
+  ) {}
 
-  ngOnInit(): void {
-  
+  ngOnInit(): void {}
+
+  onStiglo() {
+    this.narudzbenica.stavke.forEach((stavka) => {
+      this.knjigeService
+        .updateKnjiga(stavka.knjigaId, {
+          kolicina: stavka.kolicina,
+          status: Status.Dostupno,
+        })
+        .subscribe();
+    });
+
+    this.narudzbenicaService
+      .updateNarudzbenicaStatus(
+        this.narudzbenica.id,
+        StatusNarudzbenice.Obradjena
+      )
+      .pipe(
+        tap(() => {
+          this.router.navigate(['/home/tabs/pocetna']);
+          this.presentAlert('Narudžbenica je uspešno obrađena!');
+        })
+      )
+      .subscribe();
+  }
+
+  async presentAlert(header: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      buttons: ['OK'],
+    });
+    await alert.present();
   }
 }

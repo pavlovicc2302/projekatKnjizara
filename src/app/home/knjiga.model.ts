@@ -13,10 +13,10 @@ export interface KnjigaModel {
 }
 
 export enum Status{
-    Dostupno,
-    Nema_na_lageru,
-    Na_cekanju,
-    Arhivirano
+    Dostupno = "Dostupno",
+    Nema_na_lageru = "Nema_na_lageru",
+    Na_cekanju="Na_cekanju",
+    Arhivirano="Arhivirano"
 }
 
 export interface Komentar {

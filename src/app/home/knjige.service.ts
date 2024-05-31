@@ -53,7 +53,7 @@ export class KnjigeService {
         const knjige: KnjigaModel[] = [];
         for (const key in knjigeData) {
           const knjigaData = knjigeData[key];
-          if (knjigaData.status.toLowerCase() === Status[status].toLowerCase()) {
+          if (knjigaData.status === Status[status]) {
             knjige.push({
               id: key,
               autor: knjigaData.autor,
@@ -96,10 +96,15 @@ export class KnjigeService {
   }
 
   updateKnjiga(id: string, updatedKnjiga: Partial<KnjigaModel>) {
+    const updatedKnjigaToSend = {
+      ...updatedKnjiga,
+      status: updatedKnjiga.status ? Status[updatedKnjiga.status] : undefined
+    };
+
     return this.http
       .patch(
         `https://knjizara-d51e5-default-rtdb.europe-west1.firebasedatabase.app/knjige/${id}.json?auth=${this.authService.getToken()}`,
-        updatedKnjiga
+        updatedKnjigaToSend
       )
       .pipe(
         switchMap(() => this.knjige),
@@ -107,10 +112,6 @@ export class KnjigeService {
         tap(knjige => {
           const updatedKnjigeIndex = knjige.findIndex(k => k.id === id);
           const updatedKnjige = [...knjige];
-          // updatedKnjige[updatedKnjigeIndex] = {
-          //   ...knjige[updatedKnjigeIndex],
-          //   ...updatedKnjiga
-          // };
           const knjigaToUpdate = {
             ...knjige[updatedKnjigeIndex],
             ...updatedKnjiga
@@ -118,16 +119,12 @@ export class KnjigeService {
           updatedKnjige[updatedKnjigeIndex] = knjigaToUpdate;
           this._knjige.next(updatedKnjige);
 
-          
           if (updatedKnjiga.kolicina === 0) {
             this.promeniStatusKnjige(id, Status.Nema_na_lageru).subscribe();
           }
 
         })
-
-      );
-
-
+      )
   }
 
   promeniStatusKnjige(id: string, status: Status) {
