@@ -9,7 +9,6 @@ export interface KnjigaModel {
     kolicina: number,
     status: Status,
     komentari?: Komentar[],
-    //userId: string
 }
 
 export enum Status{

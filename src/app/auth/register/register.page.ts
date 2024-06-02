@@ -22,13 +22,6 @@ export class RegisterPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.registerForm = new FormGroup({
-    //   name: new FormControl('', Validators.required),
-    //   surname: new FormControl('', Validators.required),
-    //   email: new FormControl('', [Validators.required, Validators.email]),
-    //   password: new FormControl('', [Validators.required, Validators.minLength(7)])
-    // })
-
     this.disableAutoFill();
   }
 

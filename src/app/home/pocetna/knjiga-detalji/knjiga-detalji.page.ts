@@ -30,7 +30,6 @@ export class KnjigaDetaljiPage implements OnInit {
     kolicina: 10,
     status: Status.Dostupno,
     komentari: [],
-    // userId: '1'
   };
 
   constructor(
@@ -149,10 +148,6 @@ export class KnjigaDetaljiPage implements OnInit {
     let korisnik = localStorage.getItem('ulogovani');
     const displayNameParts = korisnik.split(' ');
     const ime = displayNameParts[0];
-    if (!userId) {
-      this.presentToast('Korisnik nije prijavljen!', 'bottom');
-      return;
-    }
 
     const komentarData = {
       id: null,
@@ -206,12 +201,9 @@ export class KnjigaDetaljiPage implements OnInit {
 
     doc.setFontSize(12);
     doc.text(`Korisnik: ${komentar.korisnik}`, 10, 20);
-    doc.text(`${komentar.komentar}`, 10, 30);
+    doc.text(`${komentar.komentar}`, 10, 25);
 
     doc.save(`komentar_${komentar.korisnik}.pdf`);
   }
-
-
-
 
 }

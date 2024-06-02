@@ -14,7 +14,6 @@ export class PocetnaPage implements OnInit {
   knjige:  KnjigaModel[];
 
   constructor(private knjigeService: KnjigeService, private modalCtrl: ModalController, private loadingCtrl: LoadingController) { 
-    //this.knjige = this.knjigeService.knjige;
   }
 
   ngOnInit() {
@@ -42,7 +41,7 @@ export class PocetnaPage implements OnInit {
 
       this.knjigeService.addKnjiga(data.knjigaData.naslov, data.knjigaData.autor, data.knjigaData.isbn,
         data.knjigaData.slika, data.knjigaData.opis, data.knjigaData.cena, data.knjigaData.kolicina,
-         data.knjigaData.status, //data.knjigaData.userId
+         data.knjigaData.status, 
         ).subscribe((res)=> {
           console.log(res);
         });

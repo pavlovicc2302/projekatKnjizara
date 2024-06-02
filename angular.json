@@ -19,6 +19,14 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "allowedCommonJsDependencies": [
+              "jspdf-autotable",
+              "raf",
+              "core-js",
+              "rgbcolor",
+              "dompurify",
+              "html2canvas"
+            ],
             "assets": [
               {
                 "glob": "**/*",
